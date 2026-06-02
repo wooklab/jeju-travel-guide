@@ -293,6 +293,17 @@
   .filter-btn:hover { color: var(--deep); border-color: var(--mint); }
   .filter-btn.active { background: linear-gradient(135deg, var(--ocean), var(--teal)); color: #fff; border-color: transparent; box-shadow: var(--shadow-sm); }
 
+  .subfilters { margin-top: 10px; }
+  .filters[hidden] { display: none; }
+  .subfilter-btn {
+    padding: 7px 16px; border-radius: 999px; font-weight: 700; font-size: .85rem;
+    background: transparent; color: var(--muted); border: 1px solid rgba(3,80,111,.18);
+    cursor: pointer; transition: all .2s ease; display: inline-flex; align-items: center; gap: 6px;
+  }
+  .subfilter-btn .cnt { font-size: .72rem; opacity: .65; }
+  .subfilter-btn:hover { color: var(--deep); border-color: var(--mint); }
+  .subfilter-btn.active { background: var(--deep); color: #fff; border-color: transparent; }
+
   .pick-count { text-align: center; color: var(--muted); font-size: .9rem; margin: 8px 0 24px; }
 
   .pick-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
@@ -321,6 +332,13 @@
   .pb-ocean { background: #cffafe; color: #0e7490; } .pb-flower { background: #ede9fe; color: #6d28d9; }
   .pick .pmeta { margin-top: auto; padding-top: 10px; border-top: 1px dashed rgba(3,80,111,.12); display: flex; flex-wrap: wrap; gap: 5px 14px; font-size: .82rem; color: var(--muted); }
   .pick .pmeta b { color: var(--ink); font-weight: 700; }
+  .pick .pmap {
+    display: inline-flex; align-items: center; gap: 5px; align-self: flex-start;
+    margin-top: 2px; padding: 6px 12px; border-radius: 999px;
+    background: #03c75a; color: #fff; font-size: .8rem; font-weight: 700;
+    transition: filter .2s ease, transform .2s ease;
+  }
+  .pick .pmap:hover { filter: brightness(1.08); transform: translateY(-1px); }
   .pick.hide { display: none; }
 
   /* footer */
@@ -554,6 +572,13 @@
       <button class="filter-btn" data-f="spot">🏝️ 관광지 <span class="cnt"></span></button>
       <button class="filter-btn" data-f="act">🎯 액티비티 <span class="cnt"></span></button>
     </div>
+    <div class="filters subfilters" id="pickSubFilters" hidden>
+      <button class="subfilter-btn active" data-cu="all">전체 <span class="cnt"></span></button>
+      <button class="subfilter-btn" data-cu="한식">한식 <span class="cnt"></span></button>
+      <button class="subfilter-btn" data-cu="중식">중식 <span class="cnt"></span></button>
+      <button class="subfilter-btn" data-cu="양식">양식 <span class="cnt"></span></button>
+      <button class="subfilter-btn" data-cu="일식">일식 <span class="cnt"></span></button>
+    </div>
     <div class="pick-count reveal" id="pickCount"></div>
 
     <div class="pick-grid" id="pickGrid"></div>
@@ -618,22 +643,50 @@
     air: ['pb-air', '✈️ 공항근처'], ocean: ['pb-ocean', '🌊 오션뷰'], flower: ['pb-flower', '🌸 수국']
   };
   const PICKS = [
-    // 🍽️ 맛집 (한·중·양·일·향토)
-    { cat:'food', e:'🐷', n:'밀림원', t:'한식', tc:'t-han', b:['only','near'], d:'제주 흑돼지 두루치기와 김치전골을 쌈채소 한상으로. 와흘 중산간의 현지인 노포.', area:'조천 와흘', drive:'차 10분', price:'₩₩ · 1.8만' },
-    { cat:'food', e:'🍖', n:'숙성도', t:'한식', tc:'t-han', b:['only'], d:'드라이에이징 흑돼지 오겹·목살을 구워주는 인기 고깃집. 웨이팅은 각오!', area:'제주시 노형', drive:'차 30분', price:'₩₩₩ · 2~3만' },
-    { cat:'food', e:'🐟', n:'재연식당', t:'한식', tc:'t-han', b:['only'], d:'제주 은갈치·고등어조림에 푸짐한 반찬이 나오는 가성비 백반.', area:'조천 함덕', drive:'차 15분', price:'₩₩ · 1.5만' },
-    { cat:'food', e:'🍜', n:'곰막식당', t:'한식', tc:'t-han', b:['only','ocean'], d:'제주식 회국수와 고등어쌈밥으로 유명한 김녕 바닷가 향토 밥집.', area:'구좌 김녕', drive:'차 20분', price:'₩₩ · 1.3만' },
-    { cat:'food', e:'🍲', n:'자매국수', t:'한식', tc:'t-han', b:['only'], d:'진한 국물의 고기국수 한 그릇. 제주에 왔다면 꼭 먹는 솔푸드.', area:'제주시 삼도', drive:'차 30분', price:'₩ · 9천' },
-    { cat:'food', e:'🦪', n:'명진전복', t:'한식', tc:'t-han', b:['only'], d:'돌솥 전복밥과 전복뚝배기. 평대리 바닷가 인기 전복 전문점.', area:'구좌 평대', drive:'차 30분', price:'₩₩ · 1.8만' },
-    { cat:'food', e:'🥣', n:'순옥이네명가', t:'한식', tc:'t-han', b:['only','ocean'], d:'성게미역국과 전복물회가 시그니처. 종달 바다 전망은 덤.', area:'구좌 종달', drive:'차 35분', price:'₩₩ · 1.7만' },
-    { cat:'food', e:'🐠', n:'고집돌우럭', t:'한식', tc:'t-han', b:[], d:'우럭조림 정식을 정갈한 한상으로. 깔끔해서 부모님 모시기도 좋아요.', area:'성산/함덕', drive:'차 20~40분', price:'₩₩ · 2만' },
-    { cat:'food', e:'🍝', n:'만덕이네', t:'중식', tc:'t-jung', b:['air'], d:'전복·해물 가득한 해물짬뽕과 손짜장. 공항 근처라 마지막 날 코스로 딱.', area:'제주시 도두', drive:'차 30분', price:'₩ · 1만' },
-    { cat:'food', e:'🥟', n:'아서원', t:'중식', tc:'t-jung', b:[], d:'멘보샤·누룽지탕이 맛있는 제주 노포 중식당. 요리 한 상 추천.', area:'제주시', drive:'차 30분', price:'₩₩ · 1.5~3만' },
-    { cat:'food', e:'🥧', n:'플랫 Platt', t:'양식', tc:'t-yang', b:['only','photo'], d:'제주 흑돼지 잠봉을 넣은 미트파이 전문. 함덕 감성에 사진도 예뻐요.', area:'조천 함덕', drive:'차 20분', price:'₩₩ · 1만' },
-    { cat:'food', e:'🍔', n:'노라바', t:'양식', tc:'t-yang', b:['only'], d:'통전복이 들어간 전복버거로 유명한 수제버거집. 제주에서만!', area:'제주시 노형', drive:'차 30분', price:'₩₩ · 1.4만' },
-    { cat:'food', e:'🍲', n:'김녕빗소리', t:'일식', tc:'t-il', b:[], d:'탱글한 면의 소바와 겉바속촉 유부초밥. 동부 가성비 일식.', area:'구좌 김녕', drive:'차 20분', price:'₩₩ · 1.2만' },
-    { cat:'food', e:'🍜', n:'수우동', t:'일식', tc:'t-il', b:[], d:'쫄깃한 면에 가다랑어 육수가 일품인 붓카케·자루 우동집.', area:'제주시', drive:'차 30분', price:'₩₩ · 1만' },
-    { cat:'food', e:'🍙', n:'제주김만복', t:'분식', tc:'t-bunsik', b:['only','air'], d:'통전복이 들어간 전복김밥. 드라이브·공항 길 포장 간식으로 딱.', area:'제주시(공항)', drive:'차 30분', price:'₩ · 6천' },
+    // 🍽️ 맛집 — 한식 10
+    { cat:'food', cu:'한식', e:'🐷', n:'밀림원', t:'한식', tc:'t-han', b:['only','near'], d:'제주 흑돼지 두루치기와 김치전골을 쌈채소 한상으로. 와흘 중산간의 현지인 노포.', area:'조천 와흘', drive:'차 10분', price:'₩₩ · 1.8만' },
+    { cat:'food', cu:'한식', e:'🍖', n:'숙성도', t:'한식', tc:'t-han', b:['only'], d:'드라이에이징 흑돼지 오겹·목살을 구워주는 인기 고깃집. 웨이팅은 각오!', area:'제주시 노형', drive:'차 30분', price:'₩₩₩ · 2~3만' },
+    { cat:'food', cu:'한식', e:'🍲', n:'우진해장국', t:'한식', tc:'t-han', b:['only'], d:'고사리를 갈아 진하게 끓인 고사리육개장·몸국. 줄 서서 먹는 제주 향토 해장국.', area:'제주시', drive:'차 30분', price:'₩ · 1.1만' },
+    { cat:'food', cu:'한식', e:'🐟', n:'재연식당', t:'한식', tc:'t-han', b:['only'], d:'제주 은갈치·고등어조림에 푸짐한 반찬이 나오는 가성비 백반.', area:'조천 함덕', drive:'차 15분', price:'₩₩ · 1.5만' },
+    { cat:'food', cu:'한식', e:'🍜', n:'곰막식당', t:'한식', tc:'t-han', b:['only','ocean'], d:'제주식 회국수와 고등어쌈밥으로 유명한 김녕 바닷가 향토 밥집.', area:'구좌 김녕', drive:'차 20분', price:'₩₩ · 1.3만' },
+    { cat:'food', cu:'한식', e:'🍲', n:'자매국수', t:'한식', tc:'t-han', b:['only'], d:'진한 국물의 고기국수 한 그릇. 제주에 왔다면 꼭 먹는 솔푸드.', area:'제주시 삼도', drive:'차 30분', price:'₩ · 9천' },
+    { cat:'food', cu:'한식', e:'🦪', n:'명진전복', t:'한식', tc:'t-han', b:['only'], d:'돌솥 전복밥과 전복뚝배기. 평대리 바닷가 인기 전복 전문점.', area:'구좌 평대', drive:'차 30분', price:'₩₩ · 1.8만' },
+    { cat:'food', cu:'한식', e:'🥣', n:'순옥이네명가', t:'한식', tc:'t-han', b:['only','ocean'], d:'성게미역국과 전복물회가 시그니처. 종달 바다 전망은 덤.', area:'구좌 종달', drive:'차 35분', price:'₩₩ · 1.7만' },
+    { cat:'food', cu:'한식', e:'🐠', n:'고집돌우럭', t:'한식', tc:'t-han', b:[], d:'우럭조림 정식을 정갈한 한상으로. 깔끔해서 부모님 모시기도 좋아요.', area:'성산/함덕', drive:'차 20~40분', price:'₩₩ · 2만' },
+    { cat:'food', cu:'한식', e:'🐟', n:'물항식당', t:'한식', tc:'t-han', b:['only'], d:'제주 향토 각재기국과 통통한 고등어구이. 현지인 단골 백반집.', area:'제주시', drive:'차 30분', price:'₩₩ · 1.3만' },
+    // 🍽️ 맛집 — 중식 10
+    { cat:'food', cu:'중식', e:'🍝', n:'만덕이네', t:'중식', tc:'t-jung', b:['air'], d:'전복·해물 가득한 해물짬뽕과 손짜장. 공항 근처라 마지막 날 코스로 딱.', area:'제주시 도두', drive:'차 30분', price:'₩ · 1만' },
+    { cat:'food', cu:'중식', e:'🥢', n:'도두반점', t:'중식', tc:'t-jung', b:['air'], d:'도민 인증 짬뽕 맛집. 얼큰한 짬뽕과 바삭 탕수육 조합. 공항 근처.', area:'제주시 도두', drive:'차 30분', price:'₩₩ · 1.2만' },
+    { cat:'food', cu:'중식', e:'🥟', n:'아서원', t:'중식', tc:'t-jung', b:[], d:'멘보샤·누룽지탕이 맛있는 제주 노포 중식당. 요리 한 상 추천.', area:'제주시', drive:'차 30분', price:'₩₩ · 1.5~3만' },
+    { cat:'food', cu:'중식', e:'🌶️', n:'1950 에어차이나', t:'중식', tc:'t-jung', b:[], d:'불향 가득 불짬뽕과 정통 중화요리를 내는 인기 중식당.', area:'제주시', drive:'차 30분', price:'₩₩ · 1.2만' },
+    { cat:'food', cu:'중식', e:'🍜', n:'송림반점', t:'중식', tc:'t-jung', b:[], d:'옛날식 짬뽕과 간짜장이 정겨운 제주 노포 중국집.', area:'제주시', drive:'차 30분', price:'₩ · 9천' },
+    { cat:'food', cu:'중식', e:'🦐', n:'섬소나이', t:'중식', tc:'t-jung', b:[], d:'딱새우가 들어간 시원한 해물짬뽕으로 입소문 난 곳.', area:'제주시', drive:'차 30분', price:'₩₩ · 1.2만' },
+    { cat:'food', cu:'중식', e:'🍲', n:'소리원', t:'중식', tc:'t-jung', b:[], d:'짬뽕부터 유산슬·팔보채까지 두루 맛있는 동네 중화요리.', area:'제주시', drive:'차 30분', price:'₩₩ · 1.3만' },
+    { cat:'food', cu:'중식', e:'🥡', n:'그시절그짬뽕', t:'중식', tc:'t-jung', b:[], d:'레트로 감성의 옛날식 짬뽕·군만두. 추억의 그 맛.', area:'제주시', drive:'차 30분', price:'₩ · 9천' },
+    { cat:'food', cu:'중식', e:'🥬', n:'볼고롱짬뽕', t:'중식', tc:'t-jung', b:[], d:'생 시금치를 갈아 만든 초록 면의 이색 짬뽕. 신선한 해산물 가득.', area:'한림', drive:'차 50분', price:'₩₩ · 1.2만' },
+    { cat:'food', cu:'중식', e:'🌊', n:'화춘', t:'중식', tc:'t-jung', b:['ocean','photo'], d:'선인장마을 바다뷰와 함께 즐기는 짬뽕. 뷰 맛집 중식당.', area:'한림 월령', drive:'차 1시간', price:'₩₩ · 1.3만' },
+    // 🍽️ 맛집 — 양식 10
+    { cat:'food', cu:'양식', e:'🥧', n:'플랫 Platt', t:'양식', tc:'t-yang', b:['only','photo'], d:'제주 흑돼지 잠봉을 넣은 미트파이 전문. 함덕 감성에 사진도 예뻐요.', area:'조천 함덕', drive:'차 20분', price:'₩₩ · 1만' },
+    { cat:'food', cu:'양식', e:'🍔', n:'무거버거', t:'양식', tc:'t-yang', b:['only','ocean','photo'], d:'마늘·당근·시금치 컬러 번의 수제버거. 통창 오션뷰까지.', area:'조천 함덕', drive:'차 20분', price:'₩₩ · 1.3만' },
+    { cat:'food', cu:'양식', e:'🍝', n:'101동파스타', t:'양식', tc:'t-yang', b:['only'], d:'딱새우·우니·전복을 올린 제주산 해산물 파스타 전문점.', area:'조천 함덕', drive:'차 20분', price:'₩₩₩ · 2만' },
+    { cat:'food', cu:'양식', e:'🍕', n:'피자클래스 함덕점', t:'양식', tc:'t-yang', b:[], d:'직접 반죽한 도우에 자연산 치즈를 듬뿍 올린 수제 화덕피자.', area:'조천 함덕', drive:'차 20분', price:'₩₩ · 2만' },
+    { cat:'food', cu:'양식', e:'🍔', n:'노라바', t:'양식', tc:'t-yang', b:['only'], d:'통전복이 들어간 전복버거로 유명한 수제버거집. 제주에서만!', area:'제주시 노형', drive:'차 30분', price:'₩₩ · 1.4만' },
+    { cat:'food', cu:'양식', e:'🌮', n:'치저스', t:'양식', tc:'t-yang', b:[], d:'두툼한 패티의 아메리칸 수제버거와 타코. 맥주와 찰떡.', area:'제주시', drive:'차 30분', price:'₩₩ · 1.4만' },
+    { cat:'food', cu:'양식', e:'🥩', n:'페를로', t:'양식', tc:'t-yang', b:[], d:'화덕 파스타와 스테이크를 내는 캐주얼 이탈리안.', area:'제주시', drive:'차 30분', price:'₩₩₩ · 2~3만' },
+    { cat:'food', cu:'양식', e:'🍽️', n:'주옥', t:'양식', tc:'t-yang', b:['only'], d:'제주 식재료로 풀어낸 파인다이닝 코스. 기념일 한 끼로 특별하게.', area:'제주시', drive:'차 30분', price:'₩₩₩₩ · 5만↑' },
+    { cat:'food', cu:'양식', e:'🌅', n:'델문도 키친', t:'양식', tc:'t-yang', b:['ocean','photo'], d:'함덕 바다를 보며 즐기는 브런치와 파스타. 노을 명소.', area:'조천 함덕', drive:'차 20분', price:'₩₩ · 1.5만' },
+    { cat:'food', cu:'양식', e:'🍺', n:'맥파이 브루어리', t:'양식', tc:'t-yang', b:['only'], d:'제주 수제맥주와 피자·너겟 안주. 제주 크래프트비어를 한자리에.', area:'제주시 탑동', drive:'차 30분', price:'₩₩ · 2만' },
+    // 🍽️ 맛집 — 일식 10
+    { cat:'food', cu:'일식', e:'🍲', n:'김녕빗소리', t:'일식', tc:'t-il', b:[], d:'탱글한 면의 소바와 겉바속촉 유부초밥. 동부 가성비 일식.', area:'구좌 김녕', drive:'차 20분', price:'₩₩ · 1.2만' },
+    { cat:'food', cu:'일식', e:'🍜', n:'수우동', t:'일식', tc:'t-il', b:[], d:'쫄깃한 면에 가다랑어 육수가 일품인 붓카케·자루 우동집.', area:'제주시', drive:'차 30분', price:'₩₩ · 1만' },
+    { cat:'food', cu:'일식', e:'🌰', n:'미진', t:'일식', tc:'t-il', b:[], d:'직접 뽑은 메밀소바와 바삭한 돈카츠를 내는 제주 노포 일식.', area:'제주시', drive:'차 30분', price:'₩₩ · 1.2만' },
+    { cat:'food', cu:'일식', e:'🍣', n:'스시코쿠라', t:'일식', tc:'t-il', b:['air'], d:'소금만으로 간하는 소금 스시 오마카세. 제주산 제철 재료. 공항 근처.', area:'제주시 오라', drive:'차 30분', price:'₩₩₩₩ · 런치 8만' },
+    { cat:'food', cu:'일식', e:'🍣', n:'스시 호시카이', t:'일식', tc:'t-il', b:[], d:'제주 제철 해산물로 선보이는 정통 스시 오마카세. 예약 필수.', area:'제주시', drive:'차 30분', price:'₩₩₩₩ · 10만↑' },
+    { cat:'food', cu:'일식', e:'🍤', n:'흑돈가', t:'일식', tc:'t-il', b:['only'], d:'제주 흑돼지로 튀긴 두툼한 흑돼지 돈카츠. 육즙 가득.', area:'제주시', drive:'차 30분', price:'₩₩ · 1.5만' },
+    { cat:'food', cu:'일식', e:'🏮', n:'후라토식당', t:'일식', tc:'t-il', b:[], d:'신선한 제주 해산물 안주로 한잔하기 좋은 노포 이자카야.', area:'제주시', drive:'차 30분', price:'₩₩₩ · 2~3만' },
+    { cat:'food', cu:'일식', e:'🍥', n:'우동 카덴', t:'일식', tc:'t-il', b:[], d:'정호영 셰프의 사누키 우동 명가. (이미 첫날 저녁 일정에 포함!)', area:'조천', drive:'차 25분', price:'₩₩ · 1.2만' },
+    { cat:'food', cu:'일식', e:'🍣', n:'스시 마타네', t:'일식', tc:'t-il', b:[], d:'합리적인 가격대로 즐기는 스시 오마카세. 가성비 좋은 한 끼.', area:'제주시', drive:'차 30분', price:'₩₩₩₩ · 10만대' },
+    { cat:'food', cu:'일식', e:'💥', n:'맛있는폭격', t:'일식', tc:'t-il', b:[], d:'바삭한 수제 돈카츠와 하이라이스로 유명한 성산 일식집.', area:'성산', drive:'차 40분', price:'₩₩ · 1.3만' },
     // ☕ 카페 (커피·빵·포토)
     { cat:'cafe', e:'🥜', n:'풍림다방', t:'시그니처', tc:'t-cafe', b:['near','photo'], d:'땅콩크림커피로 유명한 선흘 숲속 카페. 한적한 곶자왈 감성 사진.', area:'조천 선흘', drive:'차 10분', price:'₩₩ · 7천' },
     { cat:'cafe', e:'🌾', n:'글렌코', t:'정원', tc:'t-cafe', b:['near','photo'], d:'팜파스·핑크뮬리가 가득한 정원 카페. 인생샷 포토존 천국.', area:'조천/교래', drive:'차 10분', price:'₩₩ · 8천' },
@@ -675,38 +728,64 @@
   ];
 
   const pickGrid = document.getElementById('pickGrid');
-  pickGrid.innerHTML = PICKS.map(p => `
-    <article class="pick" data-cat="${p.cat}">
+  pickGrid.innerHTML = PICKS.map(p => {
+    const mq = encodeURIComponent(`${p.n} 제주 ${p.area}`.replace(/[\/→()·]/g, ' '));
+    return `
+    <article class="pick" data-cat="${p.cat}"${p.cu ? ` data-cu="${p.cu}"` : ''}>
       <div class="ptop"><span class="pemoji">${p.e}</span><span class="pname">${p.n}</span><span class="ptype ${p.tc}">${p.t}</span></div>
       ${p.b.length ? `<div class="pbadges">${p.b.map(k => `<span class="pb ${BADGE[k][0]}">${BADGE[k][1]}</span>`).join('')}</div>` : ''}
       <p class="pdesc">${p.d}</p>
       <div class="pmeta"><span>📍 <b>${p.area}</b></span><span>🚗 ${p.drive}</span><span>💰 ${p.price}</span></div>
-    </article>`).join('');
+      <a class="pmap" href="https://map.naver.com/p/search/${mq}" target="_blank" rel="noopener">🗺️ 네이버 지도에서 보기</a>
+    </article>`;
+  }).join('');
 
   const pickCards = Array.from(pickGrid.children);
   const pickCountEl = document.getElementById('pickCount');
+  const subFilters = document.getElementById('pickSubFilters');
   const pickCounts = { all: PICKS.length, food: 0, cafe: 0, spot: 0, act: 0 };
   PICKS.forEach(p => pickCounts[p.cat]++);
+  const cuisineCounts = { all: 0, 한식: 0, 중식: 0, 양식: 0, 일식: 0 };
+  PICKS.forEach(p => { if (p.cat === 'food') { cuisineCounts.all++; cuisineCounts[p.cu]++; } });
   const pickLabel = { all: '전체', food: '맛집', cafe: '카페', spot: '관광지', act: '액티비티' };
   document.querySelectorAll('#pickFilters .filter-btn').forEach(b => {
     b.querySelector('.cnt').textContent = pickCounts[b.dataset.f];
   });
-  function applyPickFilter(f) {
+  document.querySelectorAll('#pickSubFilters .subfilter-btn').forEach(b => {
+    b.querySelector('.cnt').textContent = cuisineCounts[b.dataset.cu];
+  });
+
+  let curMain = 'all', curCu = 'all';
+  function applyPickFilter() {
     let n = 0;
     pickCards.forEach(c => {
-      const show = f === 'all' || c.dataset.cat === f;
+      const catOk = curMain === 'all' || c.dataset.cat === curMain;
+      const cuOk = curMain !== 'food' || curCu === 'all' || c.dataset.cu === curCu;
+      const show = catOk && cuOk;
       c.classList.toggle('hide', !show);
       if (show) n++;
     });
-    pickCountEl.textContent = `${pickLabel[f]} ${n}곳`;
+    subFilters.hidden = curMain !== 'food';
+    const label = (curMain === 'food' && curCu !== 'all') ? curCu : pickLabel[curMain];
+    pickCountEl.textContent = `${label} ${n}곳`;
   }
   document.querySelectorAll('#pickFilters .filter-btn').forEach(b => {
     b.addEventListener('click', () => {
+      curMain = b.dataset.f;
+      curCu = 'all';
       document.querySelectorAll('#pickFilters .filter-btn').forEach(x => x.classList.toggle('active', x === b));
-      applyPickFilter(b.dataset.f);
+      document.querySelectorAll('#pickSubFilters .subfilter-btn').forEach(x => x.classList.toggle('active', x.dataset.cu === 'all'));
+      applyPickFilter();
     });
   });
-  applyPickFilter('all');
+  document.querySelectorAll('#pickSubFilters .subfilter-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      curCu = b.dataset.cu;
+      document.querySelectorAll('#pickSubFilters .subfilter-btn').forEach(x => x.classList.toggle('active', x === b));
+      applyPickFilter();
+    });
+  });
+  applyPickFilter();
 </script>
 </body>
 </html>
