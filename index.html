@@ -267,6 +267,62 @@
   .tip h4 { color: #92670a; font-size: 1rem; }
   .tip p { color: #7a5a12; font-size: .92rem; margin-top: 2px; }
 
+  /* ---------- AI PICK ---------- */
+  .ai-intro {
+    background: linear-gradient(135deg, var(--deep), var(--ocean));
+    color: #eafaff; border-radius: var(--radius); padding: 26px 28px; margin-bottom: 22px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px;
+  }
+  .ai-intro .ai-blurb { grid-column: 1 / -1; }
+  .ai-intro h3 { color: #fff; font-size: 1.1rem; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+  .ai-intro p { color: #c5e9ee; font-size: .92rem; margin-top: 6px; }
+  .ai-stat { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18); border-radius: 14px; padding: 14px 16px; }
+  .ai-stat .k { font-size: .78rem; color: #9fd6dd; font-weight: 700; }
+  .ai-stat .v { font-size: 1rem; color: #fff; font-weight: 800; margin-top: 3px; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 16px; justify-content: center; margin-bottom: 22px; font-size: .82rem; color: var(--muted); }
+  .legend b { color: var(--deep); }
+
+  .filters { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 8px; }
+  .filter-btn {
+    padding: 10px 20px; border-radius: 999px; font-weight: 700; font-size: .95rem;
+    background: var(--white); color: var(--muted); border: 1px solid rgba(3,80,111,.12);
+    cursor: pointer; transition: all .2s ease; display: inline-flex; align-items: center; gap: 7px;
+  }
+  .filter-btn .cnt { font-size: .78rem; opacity: .7; }
+  .filter-btn:hover { color: var(--deep); border-color: var(--mint); }
+  .filter-btn.active { background: linear-gradient(135deg, var(--ocean), var(--teal)); color: #fff; border-color: transparent; box-shadow: var(--shadow-sm); }
+
+  .pick-count { text-align: center; color: var(--muted); font-size: .9rem; margin: 8px 0 24px; }
+
+  .pick-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 880px) { .pick-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 580px) { .pick-grid { grid-template-columns: 1fr; } }
+
+  .pick {
+    background: var(--white); border-radius: 16px; padding: 20px; box-shadow: var(--shadow-sm);
+    border: 1px solid rgba(3,80,111,.05); display: flex; flex-direction: column; gap: 10px;
+    transition: transform .25s ease, box-shadow .25s ease; animation: fadeUp .5s ease both;
+  }
+  .pick:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+  .pick .ptop { display: flex; align-items: flex-start; gap: 10px; }
+  .pick .pemoji { font-size: 1.6rem; line-height: 1.1; }
+  .pick .pname { font-size: 1.06rem; font-weight: 800; color: var(--deep); flex: 1; }
+  .pick .ptype { font-size: .72rem; font-weight: 800; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+  .t-han { background: #fee2e2; color: #b91c1c; } .t-jung { background: #ffedd5; color: #9a3412; }
+  .t-yang { background: #e0e7ff; color: #3730a3; } .t-il { background: #dbeafe; color: #1e40af; }
+  .t-bunsik { background: #fce7f3; color: #9d174d; } .t-cafe { background: #f3e8ff; color: #6b21a8; }
+  .t-spot { background: #dcfce7; color: #166534; } .t-act { background: #cffafe; color: #0e7490; }
+  .pick .pdesc { font-size: .9rem; color: var(--muted); line-height: 1.55; }
+  .pick .pbadges { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pb { font-size: .72rem; font-weight: 700; padding: 3px 9px; border-radius: 999px; }
+  .pb-photo { background: #fce7f3; color: #be185d; } .pb-only { background: #d1fae5; color: #047857; }
+  .pb-near { background: #fef3c7; color: #92670a; } .pb-air { background: #e0f2fe; color: #0369a1; }
+  .pb-ocean { background: #cffafe; color: #0e7490; } .pb-flower { background: #ede9fe; color: #6d28d9; }
+  .pick .pmeta { margin-top: auto; padding-top: 10px; border-top: 1px dashed rgba(3,80,111,.12); display: flex; flex-wrap: wrap; gap: 5px 14px; font-size: .82rem; color: var(--muted); }
+  .pick .pmeta b { color: var(--ink); font-weight: 700; }
+  .pick.hide { display: none; }
+
   /* footer */
   footer {
     background: linear-gradient(160deg, var(--deep), #022f43); color: #cfeef0;
@@ -300,6 +356,7 @@
       <a href="#rental">렌트카</a>
       <a href="#stay">숙소</a>
       <a href="#plan">일정</a>
+      <a href="#aipick">AI Pick</a>
     </div>
   </div>
 </nav>
@@ -466,6 +523,43 @@
   </div>
 </section>
 
+<!-- AI PICK -->
+<section class="block tint" id="aipick">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">🤖 AI PICK</span>
+      <h2>AI Pick 일정 추천</h2>
+      <p>에코랜드 호텔(조천)을 중심으로 차로 1시간 이내, 사진 찍기 좋은 곳 위주로 골랐어요. 아래 버튼으로 카테고리를 필터링해 보세요.</p>
+    </div>
+
+    <div class="ai-intro reveal">
+      <div class="ai-blurb">
+        <h3>☀️ 6월 초 제주, 이렇게 즐겨요</h3>
+        <p>아침 17~19℃, 낮 23~26℃의 포근한 초여름 날씨예요. 자외선·습도가 높으니 선크림과 가벼운 옷, 우산을 챙기세요. 6월 초는 <b style="color:#fff">수국이 막 피기 시작</b>하는 시즌이라 혼인지·보롬왓 꽃밭이 예쁘고, 바다 수온은 아직 20℃ 안팎이라 물놀이엔 슈트를 추천해요.</p>
+      </div>
+      <div class="ai-stat"><div class="k">📍 기준 위치</div><div class="v">에코랜드 호텔 · 조천</div></div>
+      <div class="ai-stat"><div class="k">🚗 이동 범위</div><div class="v">차로 1시간 이내</div></div>
+      <div class="ai-stat"><div class="k">✈️ 마지막 날(6/5)</div><div class="v">공항 근처 위주</div></div>
+    </div>
+
+    <div class="legend reveal">
+      <span><b>가격</b> ₩ 1만↓ · ₩₩ 1~2만 · ₩₩₩ 2~4만 · ₩₩₩₩ 4만↑ <i>(1인 예시)</i></span>
+      <span>📸 포토 · 🍊 제주only · 🏨 호텔근처 · ✈️ 공항근처 · 🌊 오션뷰 · 🌸 수국시즌</span>
+    </div>
+
+    <div class="filters reveal" id="pickFilters">
+      <button class="filter-btn active" data-f="all">전체 <span class="cnt"></span></button>
+      <button class="filter-btn" data-f="food">🍽️ 맛집 <span class="cnt"></span></button>
+      <button class="filter-btn" data-f="cafe">☕ 카페 <span class="cnt"></span></button>
+      <button class="filter-btn" data-f="spot">🏝️ 관광지 <span class="cnt"></span></button>
+      <button class="filter-btn" data-f="act">🎯 액티비티 <span class="cnt"></span></button>
+    </div>
+    <div class="pick-count reveal" id="pickCount"></div>
+
+    <div class="pick-grid" id="pickGrid"></div>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
   <div class="wrap">
@@ -513,10 +607,106 @@
       }
     });
   }, { rootMargin: '-45% 0px -50% 0px' });
-  ['flights', 'rental', 'plan'].forEach(id => {
+  ['flights', 'rental', 'plan', 'aipick'].forEach(id => {
     const el = document.getElementById(id);
     if (el) spyIO.observe(el);
   });
+
+  // AI Pick 데이터 + 렌더링 + 필터
+  const BADGE = {
+    photo: ['pb-photo', '📸 포토'], only: ['pb-only', '🍊 제주only'], near: ['pb-near', '🏨 호텔근처'],
+    air: ['pb-air', '✈️ 공항근처'], ocean: ['pb-ocean', '🌊 오션뷰'], flower: ['pb-flower', '🌸 수국']
+  };
+  const PICKS = [
+    // 🍽️ 맛집 (한·중·양·일·향토)
+    { cat:'food', e:'🐷', n:'밀림원', t:'한식', tc:'t-han', b:['only','near'], d:'제주 흑돼지 두루치기와 김치전골을 쌈채소 한상으로. 와흘 중산간의 현지인 노포.', area:'조천 와흘', drive:'차 10분', price:'₩₩ · 1.8만' },
+    { cat:'food', e:'🍖', n:'숙성도', t:'한식', tc:'t-han', b:['only'], d:'드라이에이징 흑돼지 오겹·목살을 구워주는 인기 고깃집. 웨이팅은 각오!', area:'제주시 노형', drive:'차 30분', price:'₩₩₩ · 2~3만' },
+    { cat:'food', e:'🐟', n:'재연식당', t:'한식', tc:'t-han', b:['only'], d:'제주 은갈치·고등어조림에 푸짐한 반찬이 나오는 가성비 백반.', area:'조천 함덕', drive:'차 15분', price:'₩₩ · 1.5만' },
+    { cat:'food', e:'🍜', n:'곰막식당', t:'한식', tc:'t-han', b:['only','ocean'], d:'제주식 회국수와 고등어쌈밥으로 유명한 김녕 바닷가 향토 밥집.', area:'구좌 김녕', drive:'차 20분', price:'₩₩ · 1.3만' },
+    { cat:'food', e:'🍲', n:'자매국수', t:'한식', tc:'t-han', b:['only'], d:'진한 국물의 고기국수 한 그릇. 제주에 왔다면 꼭 먹는 솔푸드.', area:'제주시 삼도', drive:'차 30분', price:'₩ · 9천' },
+    { cat:'food', e:'🦪', n:'명진전복', t:'한식', tc:'t-han', b:['only'], d:'돌솥 전복밥과 전복뚝배기. 평대리 바닷가 인기 전복 전문점.', area:'구좌 평대', drive:'차 30분', price:'₩₩ · 1.8만' },
+    { cat:'food', e:'🥣', n:'순옥이네명가', t:'한식', tc:'t-han', b:['only','ocean'], d:'성게미역국과 전복물회가 시그니처. 종달 바다 전망은 덤.', area:'구좌 종달', drive:'차 35분', price:'₩₩ · 1.7만' },
+    { cat:'food', e:'🐠', n:'고집돌우럭', t:'한식', tc:'t-han', b:[], d:'우럭조림 정식을 정갈한 한상으로. 깔끔해서 부모님 모시기도 좋아요.', area:'성산/함덕', drive:'차 20~40분', price:'₩₩ · 2만' },
+    { cat:'food', e:'🍝', n:'만덕이네', t:'중식', tc:'t-jung', b:['air'], d:'전복·해물 가득한 해물짬뽕과 손짜장. 공항 근처라 마지막 날 코스로 딱.', area:'제주시 도두', drive:'차 30분', price:'₩ · 1만' },
+    { cat:'food', e:'🥟', n:'아서원', t:'중식', tc:'t-jung', b:[], d:'멘보샤·누룽지탕이 맛있는 제주 노포 중식당. 요리 한 상 추천.', area:'제주시', drive:'차 30분', price:'₩₩ · 1.5~3만' },
+    { cat:'food', e:'🥧', n:'플랫 Platt', t:'양식', tc:'t-yang', b:['only','photo'], d:'제주 흑돼지 잠봉을 넣은 미트파이 전문. 함덕 감성에 사진도 예뻐요.', area:'조천 함덕', drive:'차 20분', price:'₩₩ · 1만' },
+    { cat:'food', e:'🍔', n:'노라바', t:'양식', tc:'t-yang', b:['only'], d:'통전복이 들어간 전복버거로 유명한 수제버거집. 제주에서만!', area:'제주시 노형', drive:'차 30분', price:'₩₩ · 1.4만' },
+    { cat:'food', e:'🍲', n:'김녕빗소리', t:'일식', tc:'t-il', b:[], d:'탱글한 면의 소바와 겉바속촉 유부초밥. 동부 가성비 일식.', area:'구좌 김녕', drive:'차 20분', price:'₩₩ · 1.2만' },
+    { cat:'food', e:'🍜', n:'수우동', t:'일식', tc:'t-il', b:[], d:'쫄깃한 면에 가다랑어 육수가 일품인 붓카케·자루 우동집.', area:'제주시', drive:'차 30분', price:'₩₩ · 1만' },
+    { cat:'food', e:'🍙', n:'제주김만복', t:'분식', tc:'t-bunsik', b:['only','air'], d:'통전복이 들어간 전복김밥. 드라이브·공항 길 포장 간식으로 딱.', area:'제주시(공항)', drive:'차 30분', price:'₩ · 6천' },
+    // ☕ 카페 (커피·빵·포토)
+    { cat:'cafe', e:'🥜', n:'풍림다방', t:'시그니처', tc:'t-cafe', b:['near','photo'], d:'땅콩크림커피로 유명한 선흘 숲속 카페. 한적한 곶자왈 감성 사진.', area:'조천 선흘', drive:'차 10분', price:'₩₩ · 7천' },
+    { cat:'cafe', e:'🌾', n:'글렌코', t:'정원', tc:'t-cafe', b:['near','photo'], d:'팜파스·핑크뮬리가 가득한 정원 카페. 인생샷 포토존 천국.', area:'조천/교래', drive:'차 10분', price:'₩₩ · 8천' },
+    { cat:'cafe', e:'🌊', n:'델문도', t:'오션뷰', tc:'t-cafe', b:['ocean','photo'], d:'함덕 에메랄드 바다 바로 앞. 노을 맛집이자 미야자키풍 오션뷰.', area:'조천 함덕', drive:'차 20분', price:'₩₩ · 8천' },
+    { cat:'cafe', e:'🏭', n:'공백', t:'포토', tc:'t-cafe', b:['ocean','photo'], d:'옛 공장을 개조한 김녕 대형 카페. 바다와 어우러진 독특한 사진.', area:'구좌 김녕', drive:'차 20분', price:'₩₩ · 8천' },
+    { cat:'cafe', e:'🥐', n:'구름과자', t:'베이커리', tc:'t-cafe', b:['photo'], d:'버터 향 가득 구름과자(버터번) 빵맛집. 월정리 디저트 1순위.', area:'구좌 월정리', drive:'차 25분', price:'₩₩ · 7천' },
+    { cat:'cafe', e:'🪟', n:'레이오버', t:'오션뷰', tc:'t-cafe', b:['ocean','photo'], d:'통창으로 월정리 바다가 가득 들어오는 대형 카페.', area:'구좌 월정리', drive:'차 25분', price:'₩₩ · 8천' },
+    { cat:'cafe', e:'🌴', n:'모알보알', t:'포토', tc:'t-cafe', b:['photo'], d:'발리 감성 인테리어와 야외 포토존. 이국적인 노을 카페.', area:'구좌 평대', drive:'차 25분', price:'₩₩ · 8천' },
+    { cat:'cafe', e:'🖼️', n:'카페 라라', t:'포토', tc:'t-cafe', b:['ocean','photo'], d:'세화 바다를 액자에 담는 포토존. 엽서에 글 남기는 감성 카페.', area:'구좌 세화', drive:'차 30분', price:'₩₩ · 7천' },
+    { cat:'cafe', e:'🌿', n:'그초록', t:'정원', tc:'t-cafe', b:['photo'], d:'비밀의 화원 같은 식물 정원 카페. 초록빛 사진이 예뻐요.', area:'구좌 한동', drive:'차 30분', price:'₩₩ · 8천' },
+    { cat:'cafe', e:'🍞', n:'덕인당', t:'베이커리', tc:'t-cafe', b:['only'], d:'제주 전통 보리빵을 굽는 노포 베이커리. 쑥·팥보리빵이 별미.', area:'구좌 세화', drive:'차 25분', price:'₩ · 4천' },
+    { cat:'cafe', e:'🍊', n:'제주당', t:'베이커리', tc:'t-cafe', b:['only'], d:'한라봉·우유크림빵으로 유명한 빵지순례 코스. 제주 한정 베이커리.', area:'제주시', drive:'차 30분', price:'₩₩ · 6천' },
+    { cat:'cafe', e:'🏔️', n:'카페 한라산', t:'시그니처', tc:'t-cafe', b:['photo'], d:'한라산을 닮은 시그니처 라떼로 유명. 귀여운 사진 한 컷.', area:'제주시 아라', drive:'차 25분', price:'₩₩ · 7천' },
+    { cat:'cafe', e:'🌊', n:'동복낙천가', t:'오션뷰', tc:'t-cafe', b:['ocean','photo'], d:'동복 바다를 품은 대형 오션뷰 카페. 탁 트인 뷰가 시원해요.', area:'구좌 동복', drive:'차 25분', price:'₩₩ · 8천' },
+    { cat:'cafe', e:'🍵', n:'산노루', t:'정원', tc:'t-cafe', b:['photo'], d:'제주 녹차를 음미하는 차 전문 카페. 정원과 녹차라떼가 인기.', area:'제주시 봉개', drive:'차 20분', price:'₩₩ · 8천' },
+    { cat:'cafe', e:'✈️', n:'듀포레', t:'오션뷰', tc:'t-cafe', b:['air','ocean','photo'], d:'용두암 옆 비행기 뜨는 오션뷰 카페. 공항 가기 전 마지막 사진.', area:'제주시 용두암', drive:'차 30분', price:'₩₩ · 8천' },
+    // 🏝️ 관광지 (포토·시즌)
+    { cat:'spot', e:'🌲', n:'사려니숲길', t:'숲길', tc:'t-spot', b:['near','photo'], d:'쭉쭉 뻗은 삼나무 숲길. 안개 낀 날 더 분위기 있는 힐링 포토 명소.', area:'조천', drive:'차 10분', price:'무료' },
+    { cat:'spot', e:'🌳', n:'비자림', t:'숲', tc:'t-spot', b:['photo'], d:'500~800년 비자나무 2만 그루의 천년 숲. 붉은 송이길 산책로.', area:'구좌 평대', drive:'차 20분', price:'3,000원' },
+    { cat:'spot', e:'🌋', n:'산굼부리', t:'분화구', tc:'t-spot', b:['near','photo'], d:'드넓은 분화구와 억새 평원. 사방이 탁 트인 중산간 포토 스폿.', area:'조천 교래', drive:'차 10분', price:'7,000원' },
+    { cat:'spot', e:'🕳️', n:'만장굴', t:'동굴', tc:'t-spot', b:[], d:'세계자연유산 용암동굴. 한여름에도 시원한 1km 탐방 코스.', area:'구좌 김녕', drive:'차 20분', price:'4,000원' },
+    { cat:'spot', e:'🏖️', n:'함덕 서우봉해변', t:'해변', tc:'t-spot', b:['ocean','photo'], d:'에메랄드빛 바다와 서우봉 산책로. 동부 최고의 해변 인생샷.', area:'조천 함덕', drive:'차 20분', price:'무료' },
+    { cat:'spot', e:'🌊', n:'월정리해변', t:'해변', tc:'t-spot', b:['ocean','photo'], d:'카페거리와 옥빛 바다. 감성 소품과 함께 찍는 인기 포토존.', area:'구좌 월정리', drive:'차 25분', price:'무료' },
+    { cat:'spot', e:'🌅', n:'성산일출봉', t:'일출', tc:'t-spot', b:['ocean','photo'], d:'바다 위 솟은 유네스코 분화구. 정상 전망과 일출이 장관.', area:'성산', drive:'차 40분', price:'5,000원' },
+    { cat:'spot', e:'⛴️', n:'우도', t:'섬', tc:'t-spot', b:['ocean','photo'], d:'산호 백사장과 에메랄드 바다. 전기바이크로 섬 한 바퀴 포토 투어.', area:'성산항→우도', drive:'차 40분+배', price:'왕복 1만~' },
+    { cat:'spot', e:'💧', n:'혼인지', t:'수국', tc:'t-spot', b:['flower','photo'], d:'전통 건축과 수국이 어우러지는 6월 명소. 막 피기 시작한 수국이 예뻐요.', area:'성산 온평', drive:'차 35분', price:'1,000원' },
+    { cat:'spot', e:'🌸', n:'보롬왓', t:'수국', tc:'t-spot', b:['flower','photo'], d:'수국·라벤더·메밀이 물결치는 꽃밭 정원. 5~7월 수국축제 시즌.', area:'표선', drive:'차 35분', price:'5,000원~' },
+    // 🎯 액티비티 (제주only 체험·해양)
+    { cat:'act', e:'🤿', n:'해녀 물질 체험', t:'체험', tc:'t-act', b:['only','ocean'], d:'해녀복을 입고 직접 바다에 들어가 해산물을 채취하는 제주만의 체험.', area:'구좌 세화/종달', drive:'차 30분', price:'₩₩₩₩ · 4~5만' },
+    { cat:'act', e:'🛵', n:'우도 전기바이크', t:'투어', tc:'t-act', b:['ocean','photo'], d:'우도를 전기바이크·스쿠터로 일주. 검멀레·서빈백사 포토 라이딩.', area:'우도', drive:'차 40분+배', price:'₩₩₩ · 2인 4만~' },
+    { cat:'act', e:'🛶', n:'투명카약 · SUP', t:'해양', tc:'t-act', b:['ocean','photo'], d:'투명 카약·패들보드로 즐기는 에메랄드 동부 바다. 초보도 OK.', area:'김녕/세화', drive:'차 20~30분', price:'₩₩₩ · 3만' },
+    { cat:'act', e:'🐠', n:'스노클링 · 프리다이빙', t:'해양', tc:'t-act', b:['ocean'], d:'맑은 동부 바다 속 탐험. 6월 수온이 낮아 슈트 착용 권장.', area:'김녕/우도', drive:'차 20~40분', price:'₩₩₩₩ · 5~8만' },
+    { cat:'act', e:'🏄', n:'서핑', t:'해양', tc:'t-act', b:['ocean','photo'], d:'월정리는 동부 서핑 성지. 강습으로 첫 서핑에 도전해 보세요.', area:'구좌 월정리', drive:'차 25분', price:'₩₩₩₩ · 5~7만' },
+    { cat:'act', e:'🐴', n:'승마 체험', t:'체험', tc:'t-act', b:['near','photo'], d:'중산간 목장 초원에서 즐기는 승마. 트랙부터 숲길 코스까지.', area:'조천 교래', drive:'차 15분', price:'₩₩ · 1~3만' },
+    { cat:'act', e:'🏍️', n:'ATV 사륜바이크', t:'체험', tc:'t-act', b:['photo'], d:'초원과 바다를 가르는 사륜바이크 라이딩. 스릴과 경치 동시에.', area:'성산/조천', drive:'차 20~40분', price:'₩₩₩ · 3~5만' },
+    { cat:'act', e:'🚂', n:'에코랜드 테마파크', t:'테마', tc:'t-act', b:['near','photo'], d:'링컨 기차를 타고 도는 곶자왈 호수정원. 호텔 바로 옆이라 부담 없이.', area:'조천(호텔 옆)', drive:'차 3분', price:'₩₩ · 1.4만' },
+    { cat:'act', e:'🥾', n:'사려니·절물 숲 트레킹', t:'트레킹', tc:'t-act', b:['near'], d:'삼나무 숲을 천천히 걷는 힐링 코스. 호텔에서 가장 가까운 자연.', area:'조천', drive:'차 10~15분', price:'무료' },
+    { cat:'act', e:'⛰️', n:'다랑쉬오름 트레킹', t:'트레킹', tc:'t-act', b:['photo'], d:'"오름의 여왕" 다랑쉬. 정상에서 동부 오름 군락과 바다를 한눈에.', area:'구좌', drive:'차 20분', price:'무료' }
+  ];
+
+  const pickGrid = document.getElementById('pickGrid');
+  pickGrid.innerHTML = PICKS.map(p => `
+    <article class="pick" data-cat="${p.cat}">
+      <div class="ptop"><span class="pemoji">${p.e}</span><span class="pname">${p.n}</span><span class="ptype ${p.tc}">${p.t}</span></div>
+      ${p.b.length ? `<div class="pbadges">${p.b.map(k => `<span class="pb ${BADGE[k][0]}">${BADGE[k][1]}</span>`).join('')}</div>` : ''}
+      <p class="pdesc">${p.d}</p>
+      <div class="pmeta"><span>📍 <b>${p.area}</b></span><span>🚗 ${p.drive}</span><span>💰 ${p.price}</span></div>
+    </article>`).join('');
+
+  const pickCards = Array.from(pickGrid.children);
+  const pickCountEl = document.getElementById('pickCount');
+  const pickCounts = { all: PICKS.length, food: 0, cafe: 0, spot: 0, act: 0 };
+  PICKS.forEach(p => pickCounts[p.cat]++);
+  const pickLabel = { all: '전체', food: '맛집', cafe: '카페', spot: '관광지', act: '액티비티' };
+  document.querySelectorAll('#pickFilters .filter-btn').forEach(b => {
+    b.querySelector('.cnt').textContent = pickCounts[b.dataset.f];
+  });
+  function applyPickFilter(f) {
+    let n = 0;
+    pickCards.forEach(c => {
+      const show = f === 'all' || c.dataset.cat === f;
+      c.classList.toggle('hide', !show);
+      if (show) n++;
+    });
+    pickCountEl.textContent = `${pickLabel[f]} ${n}곳`;
+  }
+  document.querySelectorAll('#pickFilters .filter-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('#pickFilters .filter-btn').forEach(x => x.classList.toggle('active', x === b));
+      applyPickFilter(b.dataset.f);
+    });
+  });
+  applyPickFilter('all');
 </script>
 </body>
 </html>
