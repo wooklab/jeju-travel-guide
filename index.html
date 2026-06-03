@@ -283,18 +283,7 @@
   .legend { display: flex; flex-wrap: wrap; gap: 8px 16px; justify-content: center; margin-bottom: 22px; font-size: .82rem; color: var(--muted); }
   .legend b { color: var(--deep); }
 
-  .filters { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 8px; }
-  .filter-btn {
-    padding: 10px 20px; border-radius: 999px; font-weight: 700; font-size: .95rem;
-    background: var(--white); color: var(--muted); border: 1px solid rgba(3,80,111,.12);
-    cursor: pointer; transition: all .2s ease; display: inline-flex; align-items: center; gap: 7px;
-  }
-  .filter-btn .cnt { font-size: .78rem; opacity: .7; }
-  .filter-btn:hover { color: var(--deep); border-color: var(--mint); }
-  .filter-btn.active { background: linear-gradient(135deg, var(--ocean), var(--teal)); color: #fff; border-color: transparent; box-shadow: var(--shadow-sm); }
-
-  .subfilters { margin-top: 10px; }
-  .filters[hidden] { display: none; }
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; }
   .subfilter-btn {
     padding: 7px 16px; border-radius: 999px; font-weight: 700; font-size: .85rem;
     background: transparent; color: var(--muted); border: 1px solid rgba(3,80,111,.18);
@@ -304,11 +293,21 @@
   .subfilter-btn:hover { color: var(--deep); border-color: var(--mint); }
   .subfilter-btn.active { background: var(--deep); color: #fff; border-color: transparent; }
 
-  .pick-count { text-align: center; color: var(--muted); font-size: .9rem; margin: 8px 0 24px; }
+  .pick-cat { margin-bottom: 34px; }
+  .pick-cat-head { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; margin-bottom: 14px; }
+  .pick-cat-head h3 { font-size: 1.25rem; font-weight: 900; color: var(--deep); display: flex; align-items: baseline; gap: 8px; }
+  .pick-cat-head h3 .cnt { font-size: .85rem; font-weight: 700; color: var(--muted); }
+  .pick-cat-head .filters { margin: 0; }
 
-  .pick-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-  @media (max-width: 880px) { .pick-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 580px) { .pick-grid { grid-template-columns: 1fr; } }
+  .pick-rail {
+    display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch; padding: 4px 2px 14px; margin: 0 -2px;
+    scrollbar-width: thin; scrollbar-color: var(--mint) transparent;
+  }
+  .pick-rail::-webkit-scrollbar { height: 8px; }
+  .pick-rail::-webkit-scrollbar-thumb { background: var(--mint); border-radius: 999px; }
+  .pick-rail > .pick { flex: 0 0 280px; width: 280px; scroll-snap-align: start; }
+  @media (max-width: 580px) { .pick-rail > .pick { flex: 0 0 85%; width: 85%; } }
 
   .pick {
     background: var(--white); border-radius: 16px; padding: 20px; box-shadow: var(--shadow-sm);
@@ -565,7 +564,7 @@
     <div class="sec-head reveal">
       <span class="eyebrow">🤖 AI PICK</span>
       <h2>AI Pick 일정 추천</h2>
-      <p>에코랜드 호텔(조천)을 중심으로 차로 1시간 이내, 사진 찍기 좋은 곳 위주로 골랐어요. 아래 버튼으로 카테고리를 필터링해 보세요.</p>
+      <p>에코랜드 호텔(조천)을 중심으로 차로 1시간 이내, 사진 찍기 좋은 곳 위주로 골랐어요. 맛집·카페·관광지·액티비티를 좌우로 넘겨 골라 보세요.</p>
     </div>
 
     <div class="ai-intro reveal">
@@ -583,23 +582,34 @@
       <span>📸 포토 · 🍊 제주only · 🏨 호텔근처 · ✈️ 공항근처 · 🌊 오션뷰 · 🌸 수국시즌</span>
     </div>
 
-    <div class="filters reveal" id="pickFilters">
-      <button class="filter-btn active" data-f="all">전체 <span class="cnt"></span></button>
-      <button class="filter-btn" data-f="food">🍽️ 맛집 <span class="cnt"></span></button>
-      <button class="filter-btn" data-f="cafe">☕ 카페 <span class="cnt"></span></button>
-      <button class="filter-btn" data-f="spot">🏝️ 관광지 <span class="cnt"></span></button>
-      <button class="filter-btn" data-f="act">🎯 액티비티 <span class="cnt"></span></button>
+    <div class="pick-cat reveal">
+      <div class="pick-cat-head">
+        <h3>🍽️ 맛집 <span class="cnt" id="cnt-food"></span></h3>
+        <div class="filters" id="pickSubFilters">
+          <button class="subfilter-btn active" data-cu="all">전체 <span class="cnt"></span></button>
+          <button class="subfilter-btn" data-cu="한식">한식 <span class="cnt"></span></button>
+          <button class="subfilter-btn" data-cu="중식">중식 <span class="cnt"></span></button>
+          <button class="subfilter-btn" data-cu="양식">양식 <span class="cnt"></span></button>
+          <button class="subfilter-btn" data-cu="일식">일식 <span class="cnt"></span></button>
+        </div>
+      </div>
+      <div class="pick-rail" id="rail-food"></div>
     </div>
-    <div class="filters subfilters" id="pickSubFilters" hidden>
-      <button class="subfilter-btn active" data-cu="all">전체 <span class="cnt"></span></button>
-      <button class="subfilter-btn" data-cu="한식">한식 <span class="cnt"></span></button>
-      <button class="subfilter-btn" data-cu="중식">중식 <span class="cnt"></span></button>
-      <button class="subfilter-btn" data-cu="양식">양식 <span class="cnt"></span></button>
-      <button class="subfilter-btn" data-cu="일식">일식 <span class="cnt"></span></button>
-    </div>
-    <div class="pick-count reveal" id="pickCount"></div>
 
-    <div class="pick-grid" id="pickGrid"></div>
+    <div class="pick-cat reveal">
+      <div class="pick-cat-head"><h3>☕ 카페 <span class="cnt" id="cnt-cafe"></span></h3></div>
+      <div class="pick-rail" id="rail-cafe"></div>
+    </div>
+
+    <div class="pick-cat reveal">
+      <div class="pick-cat-head"><h3>🏝️ 관광지 <span class="cnt" id="cnt-spot"></span></h3></div>
+      <div class="pick-rail" id="rail-spot"></div>
+    </div>
+
+    <div class="pick-cat reveal">
+      <div class="pick-cat-head"><h3>🎯 액티비티 <span class="cnt" id="cnt-act"></span></h3></div>
+      <div class="pick-rail" id="rail-act"></div>
+    </div>
   </div>
 </section>
 
@@ -745,65 +755,41 @@
     { cat:'act', e:'⛰️', n:'다랑쉬오름 트레킹', q:'다랑쉬오름', t:'트레킹', tc:'t-act', b:['photo'], d:'"오름의 여왕" 다랑쉬. 정상에서 동부 오름 군락과 바다를 한눈에.', area:'구좌', drive:'차 20분', price:'무료' }
   ];
 
-  const pickGrid = document.getElementById('pickGrid');
-  pickGrid.innerHTML = PICKS.map(p => {
+  const cardHTML = (p) => {
     const mq = encodeURIComponent((p.q || `${p.n} 제주`).replace(/[\/→()·]/g, ' ').replace(/\s+/g, ' ').trim());
     return `
-    <article class="pick" data-cat="${p.cat}"${p.cu ? ` data-cu="${p.cu}"` : ''}>
+    <article class="pick"${p.cu ? ` data-cu="${p.cu}"` : ''}>
       <div class="ptop"><span class="pemoji">${p.e}</span><span class="pname">${p.n}</span><span class="ptype ${p.tc}">${p.t}</span></div>
       ${p.b.length ? `<div class="pbadges">${p.b.map(k => `<span class="pb ${BADGE[k][0]}">${BADGE[k][1]}</span>`).join('')}</div>` : ''}
       <p class="pdesc">${p.d}</p>
       <div class="pmeta"><span>📍 <b>${p.area}</b></span><span>🚗 ${p.drive}</span><span>💰 ${p.price}</span></div>
       <a class="pmap" href="https://map.naver.com/p/search/${mq}" target="_blank" rel="noopener">🗺️ 네이버 지도에서 보기</a>
     </article>`;
-  }).join('');
+  };
 
-  const pickCards = Array.from(pickGrid.children);
-  const pickCountEl = document.getElementById('pickCount');
-  const subFilters = document.getElementById('pickSubFilters');
-  const pickCounts = { all: PICKS.length, food: 0, cafe: 0, spot: 0, act: 0 };
-  PICKS.forEach(p => pickCounts[p.cat]++);
+  // 카테고리별 가로 레일 렌더 + 개수
+  ['food', 'cafe', 'spot', 'act'].forEach(cat => {
+    const list = PICKS.filter(p => p.cat === cat);
+    document.getElementById('rail-' + cat).innerHTML = list.map(cardHTML).join('');
+    document.getElementById('cnt-' + cat).textContent = list.length + '곳';
+  });
+
+  // 맛집 요리별 필터
   const cuisineCounts = { all: 0, 한식: 0, 중식: 0, 양식: 0, 일식: 0 };
   PICKS.forEach(p => { if (p.cat === 'food') { cuisineCounts.all++; cuisineCounts[p.cu]++; } });
-  const pickLabel = { all: '전체', food: '맛집', cafe: '카페', spot: '관광지', act: '액티비티' };
-  document.querySelectorAll('#pickFilters .filter-btn').forEach(b => {
-    b.querySelector('.cnt').textContent = pickCounts[b.dataset.f];
-  });
   document.querySelectorAll('#pickSubFilters .subfilter-btn').forEach(b => {
     b.querySelector('.cnt').textContent = cuisineCounts[b.dataset.cu];
   });
-
-  let curMain = 'all', curCu = 'all';
-  function applyPickFilter() {
-    let n = 0;
-    pickCards.forEach(c => {
-      const catOk = curMain === 'all' || c.dataset.cat === curMain;
-      const cuOk = curMain !== 'food' || curCu === 'all' || c.dataset.cu === curCu;
-      const show = catOk && cuOk;
-      c.classList.toggle('hide', !show);
-      if (show) n++;
-    });
-    subFilters.hidden = curMain !== 'food';
-    const label = (curMain === 'food' && curCu !== 'all') ? curCu : pickLabel[curMain];
-    pickCountEl.textContent = `${label} ${n}곳`;
-  }
-  document.querySelectorAll('#pickFilters .filter-btn').forEach(b => {
-    b.addEventListener('click', () => {
-      curMain = b.dataset.f;
-      curCu = 'all';
-      document.querySelectorAll('#pickFilters .filter-btn').forEach(x => x.classList.toggle('active', x === b));
-      document.querySelectorAll('#pickSubFilters .subfilter-btn').forEach(x => x.classList.toggle('active', x.dataset.cu === 'all'));
-      applyPickFilter();
-    });
-  });
+  const foodCards = Array.from(document.getElementById('rail-food').children);
+  const foodCntEl = document.getElementById('cnt-food');
   document.querySelectorAll('#pickSubFilters .subfilter-btn').forEach(b => {
     b.addEventListener('click', () => {
-      curCu = b.dataset.cu;
+      const cu = b.dataset.cu;
       document.querySelectorAll('#pickSubFilters .subfilter-btn').forEach(x => x.classList.toggle('active', x === b));
-      applyPickFilter();
+      foodCards.forEach(c => c.classList.toggle('hide', !(cu === 'all' || c.dataset.cu === cu)));
+      foodCntEl.textContent = (cu === 'all' ? cuisineCounts.all : cuisineCounts[cu]) + '곳';
     });
   });
-  applyPickFilter();
 
   // 당겨서 새로고침: 맨 위에서 아래로 끝까지 당기면 reload
   (function () {
