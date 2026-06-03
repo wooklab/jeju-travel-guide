@@ -26,6 +26,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `e` 이모지, `n` 이름, `t` 타입 라벨, `tc` 타입 배지 클래스(`t-han`/`t-cafe`/`t-spot` 등 CSS에 정의됨).
 - `b` — 배지 키 배열. `BADGE` 맵에 정의된 키(`photo`/`only`/`near`/`air`/`ocean`/`flower`)만 사용.
 - `d` 설명, `area` 지역, `drive` 소요시간, `price` 가격.
+- `q`(선택) — 네이버 지도 검색어 오버라이드. 없으면 `이름 제주 지역`으로 자동 생성. 이름이 실제 상호·지명이 아닌 액티비티/체험 항목(예: 투명카약·SUP)은 검색이 안 되므로 실제 검색되는 장소·키워드를 `q`로 지정한다.
 
 새 카테고리·배지를 추가하려면 배열뿐 아니라 (1) 필터 버튼 HTML, (2) `pickLabel`/`pickCounts`, (3) `BADGE` 맵 또는 `.t-*`/`.pb-*` CSS 클래스까지 함께 손봐야 한다.
 
