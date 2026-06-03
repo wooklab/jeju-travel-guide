@@ -360,9 +360,24 @@
     * { animation: none !important; scroll-behavior: auto; }
     .reveal { opacity: 1; transform: none; }
   }
+
+  /* 당겨서 새로고침 */
+  html, body { overscroll-behavior-y: contain; }
+  #ptr {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    height: 0; overflow: hidden; pointer-events: none;
+    display: flex; align-items: flex-end; justify-content: center;
+    color: var(--teal);
+  }
+  #ptr .ptr-i { font-size: 1.5rem; padding-bottom: 8px; line-height: 1; }
+  #ptr.spin .ptr-i { animation: ptrspin .8s linear infinite; }
+  @keyframes ptrspin { to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
+
+<!-- 당겨서 새로고침 인디케이터 -->
+<div id="ptr" aria-hidden="true"><span class="ptr-i">🔄</span></div>
 
 <!-- NAV -->
 <nav class="nav" id="nav">
@@ -788,6 +803,35 @@
     });
   });
   applyPickFilter();
+
+  // 당겨서 새로고침: 맨 위에서 아래로 끝까지 당기면 reload
+  (function () {
+    const ptr = document.getElementById('ptr');
+    if (!ptr) return;
+    const icon = ptr.querySelector('.ptr-i');
+    const TH = 70, MAX = 110;        // 새로고침 임계치 / 최대 당김(px)
+    let startY = 0, pulling = false, dist = 0;
+    const atTop = () => window.scrollY <= 0;
+    function reset() { pulling = false; dist = 0; ptr.style.height = '0px'; icon.style.transform = ''; }
+    window.addEventListener('touchstart', (e) => {
+      if (!atTop()) return;
+      startY = e.touches[0].clientY; pulling = true; dist = 0;
+    }, { passive: true });
+    window.addEventListener('touchmove', (e) => {
+      if (!pulling) return;
+      const d = e.touches[0].clientY - startY;
+      if (d <= 0 || !atTop()) { reset(); return; }
+      dist = Math.min(d * 0.5, MAX);
+      ptr.style.height = dist + 'px';
+      icon.style.transform = 'rotate(' + (dist / MAX * 270) + 'deg)';
+    }, { passive: true });
+    window.addEventListener('touchend', () => {
+      if (!pulling) return;
+      pulling = false;
+      if (dist >= TH) { ptr.classList.add('spin'); ptr.style.height = TH + 'px'; location.reload(); }
+      else reset();
+    });
+  })();
 </script>
 </body>
 </html>
