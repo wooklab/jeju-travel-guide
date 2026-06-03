@@ -369,15 +369,13 @@
     display: flex; align-items: flex-end; justify-content: center;
     color: var(--teal);
   }
-  #ptr .ptr-i { font-size: 1.5rem; padding-bottom: 8px; line-height: 1; }
-  #ptr.spin .ptr-i { animation: ptrspin .8s linear infinite; }
-  @keyframes ptrspin { to { transform: rotate(360deg); } }
+  #ptr .ptr-t { font-size: .9rem; font-weight: 700; padding-bottom: 10px; line-height: 1; white-space: nowrap; }
 </style>
 </head>
 <body>
 
 <!-- 당겨서 새로고침 인디케이터 -->
-<div id="ptr" aria-hidden="true"><span class="ptr-i">🔄</span></div>
+<div id="ptr" aria-hidden="true"><span class="ptr-t">새로고침하기</span></div>
 
 <!-- NAV -->
 <nav class="nav" id="nav">
@@ -811,11 +809,10 @@
   (function () {
     const ptr = document.getElementById('ptr');
     if (!ptr) return;
-    const icon = ptr.querySelector('.ptr-i');
     const TH = 70, MAX = 110;        // 새로고침 임계치 / 최대 당김(px)
     let startY = 0, pulling = false, dist = 0;
     const atTop = () => window.scrollY <= 0;
-    function reset() { pulling = false; dist = 0; ptr.style.height = '0px'; icon.style.transform = ''; }
+    function reset() { pulling = false; dist = 0; ptr.style.height = '0px'; }
     window.addEventListener('touchstart', (e) => {
       if (!atTop()) return;
       startY = e.touches[0].clientY; pulling = true; dist = 0;
@@ -826,12 +823,11 @@
       if (d <= 0 || !atTop()) { reset(); return; }
       dist = Math.min(d * 0.5, MAX);
       ptr.style.height = dist + 'px';
-      icon.style.transform = 'rotate(' + (dist / MAX * 270) + 'deg)';
     }, { passive: true });
     window.addEventListener('touchend', () => {
       if (!pulling) return;
       pulling = false;
-      if (dist >= TH) { ptr.classList.add('spin'); ptr.style.height = TH + 'px'; location.reload(); }
+      if (dist >= TH) { ptr.style.height = TH + 'px'; location.reload(); }
       else reset();
     });
   })();
