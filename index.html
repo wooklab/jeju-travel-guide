@@ -371,6 +371,174 @@
     color: var(--teal);
   }
   #ptr .ptr-t { font-size: .9rem; font-weight: 700; padding-bottom: 10px; line-height: 1; white-space: nowrap; }
+
+  /* ---------- 테마 토글 버튼 ---------- */
+  .theme-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto; padding: 7px 14px; border-radius: 999px; cursor: pointer;
+    font-weight: 700; font-size: .8rem; white-space: nowrap;
+    color: var(--deep); background: var(--aqua); border: 1px solid rgba(3,80,111,.15);
+    transition: all .2s ease;
+  }
+  .theme-btn:hover { background: var(--mint); }
+  @media (min-width: 821px) { .nav-links { margin-left: auto; } .theme-btn { margin-left: 14px; } }
+  @media (max-width: 820px) { .nav-toggle { order: 5; margin-left: 12px; } }
+
+  /* 아이콘 슬롯 SVG 공통 */
+  .ic svg, .pemoji svg, .chip .ico svg, .ico-wrap svg, .planepath .ico svg, .brand .logo svg { display: block; margin-inline: auto; }
+  body { transition: background-color .3s ease, color .3s ease; }
+
+  /* =================================================
+     V2 — 다크 에디토리얼 테마 (body.v2)
+     ================================================= */
+  body.v2 {
+    --v-bg: #0b0c0f; --v-panel: #14161b; --v-panel2: #191c22;
+    --v-line: rgba(255,255,255,.09); --v-line2: rgba(255,255,255,.05);
+    --v-text: #ecebe5; --v-muted2: #98a1a8; --v-mint: #2dd4bf; --v-sand: #fcd34d;
+    --v-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    --muted: #98a1a8; --ink: #ecebe5;
+    background: var(--v-bg); color: var(--v-text);
+    counter-reset: sec;
+  }
+  body.v2 ::selection { background: rgba(45,212,191,.35); }
+  body.v2 .em { display: none; }
+
+  /* v2 nav */
+  body.v2 .nav { background: rgba(11,12,15,.72); border-bottom-color: var(--v-line); }
+  body.v2 .nav.scrolled { box-shadow: 0 8px 30px rgba(0,0,0,.5); }
+  body.v2 .brand { color: var(--v-text); }
+  body.v2 .brand .logo { color: var(--v-mint); display: inline-flex; }
+  body.v2 .brand .logo svg { width: 19px; height: 19px; }
+  body.v2 .nav-links a { color: var(--v-muted2); }
+  body.v2 .nav-links a:hover { color: var(--v-text); background: rgba(255,255,255,.06); }
+  body.v2 .nav-links a.active { color: #0b0c0f; background: var(--v-mint); box-shadow: none; }
+  body.v2 .nav-toggle { color: var(--v-text); }
+  @media (max-width: 820px) {
+    body.v2 .nav-links { background: rgba(13,14,18,.97); border-bottom-color: var(--v-line); }
+  }
+  body.v2 .theme-btn { color: var(--v-mint); background: transparent; border-color: rgba(45,212,191,.45); }
+  body.v2 .theme-btn:hover { background: rgba(45,212,191,.12); }
+
+  /* v2 hero — 좌측 정렬 에디토리얼 */
+  body.v2 .hero {
+    align-items: flex-start; text-align: left;
+    padding-left: max(24px, calc((100vw - 1080px) / 2));
+    padding-right: max(24px, calc((100vw - 1080px) / 2));
+    background: radial-gradient(70% 55% at 80% 0%, rgba(45,212,191,.16), transparent 60%), var(--v-bg);
+    border-bottom: 1px solid var(--v-line);
+  }
+  body.v2 .hero::before {
+    background-image:
+      linear-gradient(var(--v-line2) 1px, transparent 1px),
+      linear-gradient(90deg, var(--v-line2) 1px, transparent 1px);
+    background-size: 64px 64px; opacity: 1; animation: none;
+  }
+  body.v2 .hero-badge {
+    background: transparent; border-color: rgba(45,212,191,.5); color: var(--v-mint);
+    font-family: var(--v-mono); font-size: .78rem; letter-spacing: .14em; text-transform: uppercase;
+    border-radius: 6px; backdrop-filter: none; position: relative;
+  }
+  body.v2 .hero h1 { font-size: clamp(2.9rem, 10vw, 6.2rem); letter-spacing: -.045em; text-shadow: none; position: relative; }
+  body.v2 .hero h1 .accent { background: none; -webkit-background-clip: initial; background-clip: initial; -webkit-text-fill-color: var(--v-mint); }
+  body.v2 .hero p.sub { color: var(--v-muted2); max-width: 560px; position: relative; }
+  body.v2 .hero-meta { justify-content: flex-start; position: relative; }
+  body.v2 .hero-meta span {
+    background: transparent; border: 1px solid var(--v-line); border-radius: 8px;
+    font-family: var(--v-mono); font-weight: 500; font-size: .85rem; color: var(--v-text);
+    backdrop-filter: none;
+  }
+  body.v2 .scroll-cue { color: var(--v-mint); }
+  body.v2 .wave { display: none; }
+
+  /* v2 sections */
+  body.v2 section.block { background: var(--v-bg); }
+  body.v2 section.tint { background: #0e1014; border-top: 1px solid var(--v-line2); border-bottom: 1px solid var(--v-line2); }
+  body.v2 .sec-head { text-align: left; margin: 0 0 48px; max-width: 720px; }
+  body.v2 .eyebrow { color: var(--v-mint); font-family: var(--v-mono); font-weight: 600; letter-spacing: .22em; font-size: .78rem; }
+  body.v2 .eyebrow::before {
+    counter-increment: sec; content: "0" counter(sec);
+    padding-right: 10px; border-right: 1px solid rgba(45,212,191,.4); margin-right: 10px;
+  }
+  body.v2 .sec-head h2 { color: var(--v-text); letter-spacing: -.03em; }
+  body.v2 .sec-head p { color: var(--v-muted2); }
+
+  /* v2 chips */
+  body.v2 .chip { background: var(--v-panel); box-shadow: none; border: 1px solid var(--v-line); border-radius: 14px; }
+  body.v2 .chip .ico { color: var(--v-mint); }
+  body.v2 .chip .ico svg { width: 26px; height: 26px; }
+  body.v2 .chip .num { color: var(--v-text); }
+
+  /* v2 cards */
+  body.v2 .card { background: var(--v-panel); border: 1px solid var(--v-line); box-shadow: none; }
+  body.v2 .card.lift:hover { transform: translateY(-4px); box-shadow: 0 18px 50px rgba(0,0,0,.5); border-color: rgba(45,212,191,.45); }
+
+  /* v2 flights */
+  body.v2 .flight.go .fhead, body.v2 .flight.back .fhead { background: var(--v-panel2); border-bottom: 1px solid var(--v-line); color: var(--v-text); }
+  body.v2 .flight .fhead .airline { background: transparent; border: 1px solid var(--v-line); color: var(--v-muted2); }
+  body.v2 .endpoint .time { color: var(--v-text); font-family: var(--v-mono); font-weight: 700; }
+  body.v2 .planepath { color: var(--v-mint); }
+  body.v2 .planepath .ico svg { width: 20px; height: 20px; }
+  body.v2 .planepath .line { background: repeating-linear-gradient(90deg, rgba(45,212,191,.55) 0 6px, transparent 6px 12px); }
+
+  /* v2 info (렌트카/숙소) */
+  body.v2 .info .ititle .ico-wrap { background: var(--v-panel2); border: 1px solid var(--v-line); color: var(--v-mint); }
+  body.v2 .ico-wrap svg { width: 24px; height: 24px; }
+  body.v2 .info .ititle h3 { color: var(--v-text); }
+  body.v2 .dl .row { border-bottom: 1px solid var(--v-line2); }
+  body.v2 .badge-grade { background: rgba(252,211,77,.14); color: var(--v-sand); }
+  body.v2 .badge-ok { background: rgba(74,222,128,.14); color: #4ade80; }
+
+  /* v2 itinerary */
+  body.v2 .day-card { background: var(--v-panel); border: 1px solid var(--v-line); box-shadow: none; }
+  body.v2 .day-card .dhead { background: var(--v-panel2); border-bottom: 1px solid var(--v-line); }
+  body.v2 .day-card .dhead .dn { font-family: var(--v-mono); color: var(--v-mint); font-weight: 700; }
+  body.v2 .day-card .dhead .dtag { background: transparent; border: 1px solid var(--v-line); color: var(--v-muted2); }
+  body.v2 .item { border-bottom-color: var(--v-line2); }
+  body.v2 .item .tline .tm { color: var(--v-mint); font-family: var(--v-mono); font-weight: 600; }
+  body.v2 .item .ic { background: var(--v-panel2); border: 1px solid var(--v-line); color: var(--v-mint); border-radius: 9px; }
+  body.v2 .item .ic svg { width: 17px; height: 17px; }
+  body.v2 .item .ctext a.map { color: var(--v-mint); }
+
+  /* v2 AI Pick */
+  body.v2 .ai-intro { background: var(--v-panel); border: 1px solid var(--v-line); }
+  body.v2 .ai-intro p { color: var(--v-muted2); }
+  body.v2 .ai-stat { background: rgba(255,255,255,.04); border-color: var(--v-line); }
+  body.v2 .ai-stat .k { color: var(--v-muted2); }
+  body.v2 .legend b { color: var(--v-text); }
+  body.v2 .subfilter-btn { border-color: var(--v-line); color: var(--v-muted2); }
+  body.v2 .subfilter-btn:hover { color: var(--v-text); border-color: rgba(45,212,191,.5); }
+  body.v2 .subfilter-btn.active { background: var(--v-mint); color: #0b0c0f; }
+  body.v2 .pick-cat-head h3 { color: var(--v-text); }
+  body.v2 .pick { background: var(--v-panel); border: 1px solid var(--v-line); box-shadow: none; }
+  body.v2 .pick:hover { border-color: rgba(45,212,191,.45); box-shadow: 0 16px 44px rgba(0,0,0,.5); }
+  body.v2 .pick .pemoji { color: var(--v-mint); }
+  body.v2 .pemoji svg { width: 26px; height: 26px; }
+  body.v2 .pick .pname { color: var(--v-text); }
+  body.v2 .pick .pmeta { border-top: 1px solid var(--v-line2); }
+  body.v2 .pick .pmeta b { color: var(--v-text); }
+  body.v2 .pick .pmap { background: rgba(3,199,90,.12); border: 1px solid rgba(3,199,90,.45); color: #2ee27a; border-radius: 8px; }
+  body.v2 .pick .pmap:hover { background: rgba(3,199,90,.2); filter: none; }
+  body.v2 .ptype, body.v2 .pb { background: transparent; border: 1px solid; }
+  body.v2 .t-han { color: #f87171; border-color: rgba(248,113,113,.4); }
+  body.v2 .t-jung { color: #fb923c; border-color: rgba(251,146,60,.4); }
+  body.v2 .t-yang { color: #a5b4fc; border-color: rgba(165,180,252,.4); }
+  body.v2 .t-il { color: #93c5fd; border-color: rgba(147,197,253,.4); }
+  body.v2 .t-bunsik { color: #f9a8d4; border-color: rgba(249,168,212,.4); }
+  body.v2 .t-cafe { color: #d8b4fe; border-color: rgba(216,180,254,.4); }
+  body.v2 .t-spot { color: #86efac; border-color: rgba(134,239,172,.4); }
+  body.v2 .t-act { color: #67e8f9; border-color: rgba(103,232,249,.4); }
+  body.v2 .pb-photo { color: #f9a8d4; border-color: rgba(249,168,212,.35); }
+  body.v2 .pb-only { color: #6ee7b7; border-color: rgba(110,231,183,.35); }
+  body.v2 .pb-near { color: #fcd34d; border-color: rgba(252,211,77,.35); }
+  body.v2 .pb-air { color: #7dd3fc; border-color: rgba(125,211,252,.35); }
+  body.v2 .pb-ocean { color: #67e8f9; border-color: rgba(103,232,249,.35); }
+  body.v2 .pb-flower { color: #c4b5fd; border-color: rgba(196,181,253,.35); }
+
+  /* v2 footer */
+  body.v2 footer { background: var(--v-bg); border-top: 1px solid var(--v-line); }
+  body.v2 footer p { color: var(--v-muted2); }
+  body.v2 footer .fnote { color: #6b7480; border-top-color: var(--v-line2); }
+  body.v2 #ptr { color: var(--v-mint); }
 </style>
 </head>
 <body>
@@ -390,18 +558,19 @@
       <a href="#plan">일정</a>
       <a href="#aipick">AI Pick</a>
     </div>
+    <button class="theme-btn" id="themeBtn" aria-label="테마 전환">✦ 모던</button>
   </div>
 </nav>
 
 <!-- HERO -->
 <header class="hero" id="top">
-  <span class="hero-badge">💍 2025.6.6 부부가 된 날 · 결혼 1주년</span>
+  <span class="hero-badge"><span class="em">💍</span> 2025.6.6 부부가 된 날 · 결혼 1주년</span>
   <h1>인욱 <span class="accent">♥</span> 혜림<br />결혼 1주년 제주 여행</h1>
   <p class="sub">우리가 부부가 된 지 1년, 6월 3일부터 5일까지 2박 3일 에메랄드빛 제주에서 보내는 기념일 여행.</p>
   <div class="hero-meta">
-    <span>📅 6/3(수) → 6/5(금)</span>
-    <span>🏨 에코랜드 호텔 5성급</span>
-    <span>🚗 티볼리 렌트</span>
+    <span><span class="em">📅</span> 6/3(수) → 6/5(금)</span>
+    <span><span class="em">🏨</span> 에코랜드 호텔 5성급</span>
+    <span><span class="em">🚗</span> 티볼리 렌트</span>
   </div>
   <div class="scroll-cue">⌄</div>
   <div class="wave">
@@ -415,7 +584,7 @@
 <section class="block" id="intro">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">🗓️ OVERVIEW</span>
+      <span class="eyebrow"><span class="em">🗓️</span> OVERVIEW</span>
       <h2>여행 한눈에 보기</h2>
       <p>2026년 6월 3일(수) ~ 6월 5일(금), 2박 3일 일정의 핵심 정보예요.</p>
     </div>
@@ -432,7 +601,7 @@
 <section class="block tint" id="flights">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">✈️ FLIGHTS</span>
+      <span class="eyebrow"><span class="em">✈️</span> FLIGHTS</span>
       <h2>항공편</h2>
       <p>가는 날은 아시아나 새벽 첫 비행기, 오는 날은 진에어 막 비행기로 하루를 알차게.</p>
     </div>
@@ -477,7 +646,7 @@
 <section class="block" id="rental">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">🚗 RENT &amp; STAY</span>
+      <span class="eyebrow"><span class="em">🚗</span> RENT &amp; STAY</span>
       <h2>렌트카 &amp; 숙소</h2>
       <p>도착하자마자 차를 픽업하고, 자연 속 5성급 호텔에서 2박을 보내요.</p>
     </div>
@@ -514,7 +683,7 @@
 <section class="block tint" id="plan">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">🍽️ EAT &amp; SEE</span>
+      <span class="eyebrow"><span class="em">🍽️</span> EAT &amp; SEE</span>
       <h2>먹고 보고, 일정</h2>
       <p>날짜별 동선과 맛집 리스트. 가게 이름을 누르면 네이버 지도로 이동해요.</p>
     </div>
@@ -525,12 +694,12 @@
       <div class="sched">
         <div class="item"><div class="tline"><span class="tm">06:30</span></div><div class="ic">🛫</div><div class="ctext"><div class="t">김포공항 출발</div><div class="d">아시아나항공 · 제주 07:45 도착</div></div></div>
         <div class="item"><div class="tline"><span class="tm">08:00</span></div><div class="ic">🚗</div><div class="ctext"><div class="t">SK렌터카 픽업</div><div class="d">티볼리 가솔린 · 완전자차</div></div></div>
-        <div class="item"><div class="tline"><span class="tm">09:30</span></div><div class="ic">🥯</div><div class="ctext"><div class="t">런던베이글</div><a class="map" href="https://naver.me/x3jFhsyC" target="_blank" rel="noopener">📍 네이버 지도</a></div></div>
-        <div class="item"><div class="tline"><span class="tm">11:30</span></div><div class="ic">🍖</div><div class="ctext"><div class="t">몽탄 제주점</div><a class="map" href="https://naver.me/G7V4vPFL" target="_blank" rel="noopener">📍 네이버 지도</a></div></div>
-        <div class="item"><div class="tline"><span class="tm">13:00</span></div><div class="ic">🏖️</div><div class="ctext"><div class="t">김녕 해수욕장</div><div class="d">점심 후 에메랄드빛 동부 바다 산책</div><a class="map" href="https://map.naver.com/p/search/%EA%B9%80%EB%85%95%ED%95%B4%EC%88%98%EC%9A%95%EC%9E%A5" target="_blank" rel="noopener">📍 네이버 지도</a></div></div>
+        <div class="item"><div class="tline"><span class="tm">09:30</span></div><div class="ic">🥯</div><div class="ctext"><div class="t">런던베이글</div><a class="map" href="https://naver.me/x3jFhsyC" target="_blank" rel="noopener"><span class="em">📍</span> 네이버 지도</a></div></div>
+        <div class="item"><div class="tline"><span class="tm">11:30</span></div><div class="ic">🍖</div><div class="ctext"><div class="t">몽탄 제주점</div><a class="map" href="https://naver.me/G7V4vPFL" target="_blank" rel="noopener"><span class="em">📍</span> 네이버 지도</a></div></div>
+        <div class="item"><div class="tline"><span class="tm">13:00</span></div><div class="ic">🏖️</div><div class="ctext"><div class="t">김녕 해수욕장</div><div class="d">점심 후 에메랄드빛 동부 바다 산책</div><a class="map" href="https://map.naver.com/p/search/%EA%B9%80%EB%85%95%ED%95%B4%EC%88%98%EC%9A%95%EC%9E%A5" target="_blank" rel="noopener"><span class="em">📍</span> 네이버 지도</a></div></div>
         <div class="item"><div class="tline"><span class="tm">15:00</span></div><div class="ic">🏨</div><div class="ctext"><div class="t">에코랜드 호텔 체크인</div><div class="d">가든 스위트</div></div></div>
         <div class="item"><div class="tline"><span class="tm">16:00</span></div><div class="ic">🏊</div><div class="ctext"><div class="t">호텔 수영장</div><div class="d">체크인 후 물놀이</div></div></div>
-        <div class="item"><div class="tline"><span class="tm">18:00</span></div><div class="ic">🥡</div><div class="ctext"><div class="t">꿈에그린짜장 함덕본점</div><div class="d">우동 카덴 수요일 휴무라 중국집으로 변경</div><a class="map" href="https://map.naver.com/p/search/%EA%BF%88%EC%97%90%EA%B7%B8%EB%A6%B0%EC%A7%9C%EC%9E%A5%20%ED%95%A8%EB%8D%95%EB%B3%B8%EC%A0%90" target="_blank" rel="noopener">📍 네이버 지도</a></div></div>
+        <div class="item"><div class="tline"><span class="tm">18:00</span></div><div class="ic">🥡</div><div class="ctext"><div class="t">꿈에그린짜장 함덕본점</div><div class="d">우동 카덴 수요일 휴무라 중국집으로 변경</div><a class="map" href="https://map.naver.com/p/search/%EA%BF%88%EC%97%90%EA%B7%B8%EB%A6%B0%EC%A7%9C%EC%9E%A5%20%ED%95%A8%EB%8D%95%EB%B3%B8%EC%A0%90" target="_blank" rel="noopener"><span class="em">📍</span> 네이버 지도</a></div></div>
         <div class="item"><div class="tline"><span class="tm">20:00</span></div><div class="ic">🛋️</div><div class="ctext"><div class="t">휴식</div><div class="d">숙소에서 자유롭게</div></div></div>
       </div>
     </div>
@@ -541,12 +710,12 @@
       <div class="sched">
         <div class="item"><div class="tline"><span class="tm">08:00</span></div><div class="ic">🍳</div><div class="ctext"><div class="t">호텔 조식</div><div class="d">2인 조식 패키지</div></div></div>
         <div class="item"><div class="tline"><span class="tm">10:00</span></div><div class="ic">🧴</div><div class="ctext"><div class="t">외출 준비</div></div></div>
-        <div class="item"><div class="tline"><span class="tm">13:00</span></div><div class="ic">☕</div><div class="ctext"><div class="t">고사리커피</div><div class="d">점심 겸 카페 타임</div><a class="map" href="https://map.naver.com/p/search/%EA%B3%A0%EC%82%AC%EB%A6%AC%EC%BB%A4%ED%94%BC%20%EC%A0%9C%EC%A3%BC" target="_blank" rel="noopener">📍 네이버 지도</a></div></div>
-        <div class="item"><div class="tline"><span class="tm">15:00</span></div><div class="ic">⛰️</div><div class="ctext"><div class="t">백약이오름</div><div class="d">탁 트인 능선 풍경의 동부 오름</div><a class="map" href="https://map.naver.com/p/search/%EB%B0%B1%EC%95%BD%EC%9D%B4%EC%98%A4%EB%A6%84" target="_blank" rel="noopener">📍 네이버 지도</a></div></div>
-        <div class="item"><div class="tline"><span class="tm">16:00</span></div><div class="ic">🏖️</div><div class="ctext"><div class="t">표선 해수욕장</div><div class="d">드넓은 백사장 바다 산책</div><a class="map" href="https://map.naver.com/p/search/%ED%91%9C%EC%84%A0%ED%95%B4%EC%88%98%EC%9A%95%EC%9E%A5" target="_blank" rel="noopener">📍 네이버 지도</a></div></div>
-        <div class="item"><div class="tline"><span class="tm">17:00</span></div><div class="ic">📜</div><div class="ctext"><div class="t">시인 이생진 시비거리</div><div class="d">성산 바다를 배경으로 시를 읽는 산책길</div><a class="map" href="https://map.naver.com/p/search/%EC%9D%B4%EC%83%9D%EC%A7%84%20%EC%8B%9C%EB%B9%84%EA%B1%B0%EB%A6%AC" target="_blank" rel="noopener">📍 네이버 지도</a></div></div>
-        <div class="item"><div class="tline"><span class="tm">17:30</span></div><div class="ic">🥧</div><div class="ctext"><div class="t">성산해나</div><div class="d">에그타르트 맛집</div><a class="map" href="https://map.naver.com/p/search/%EC%84%B1%EC%82%B0%ED%95%B4%EB%82%98" target="_blank" rel="noopener">📍 네이버 지도</a></div></div>
-        <div class="item"><div class="tline"><span class="tm">18:00</span></div><div class="ic">🍽️</div><div class="ctext"><div class="t">섭지코지로 본점</div><div class="d">섭지코지 근처 저녁 식사</div><a class="map" href="https://map.naver.com/p/search/%EC%84%AD%EC%A7%80%EC%BD%94%EC%A7%80%EB%A1%9C%20%EB%B3%B8%EC%A0%90" target="_blank" rel="noopener">📍 네이버 지도</a></div></div>
+        <div class="item"><div class="tline"><span class="tm">13:00</span></div><div class="ic">☕</div><div class="ctext"><div class="t">고사리커피</div><div class="d">점심 겸 카페 타임</div><a class="map" href="https://map.naver.com/p/search/%EA%B3%A0%EC%82%AC%EB%A6%AC%EC%BB%A4%ED%94%BC%20%EC%A0%9C%EC%A3%BC" target="_blank" rel="noopener"><span class="em">📍</span> 네이버 지도</a></div></div>
+        <div class="item"><div class="tline"><span class="tm">15:00</span></div><div class="ic">⛰️</div><div class="ctext"><div class="t">백약이오름</div><div class="d">탁 트인 능선 풍경의 동부 오름</div><a class="map" href="https://map.naver.com/p/search/%EB%B0%B1%EC%95%BD%EC%9D%B4%EC%98%A4%EB%A6%84" target="_blank" rel="noopener"><span class="em">📍</span> 네이버 지도</a></div></div>
+        <div class="item"><div class="tline"><span class="tm">16:00</span></div><div class="ic">🏖️</div><div class="ctext"><div class="t">표선 해수욕장</div><div class="d">드넓은 백사장 바다 산책</div><a class="map" href="https://map.naver.com/p/search/%ED%91%9C%EC%84%A0%ED%95%B4%EC%88%98%EC%9A%95%EC%9E%A5" target="_blank" rel="noopener"><span class="em">📍</span> 네이버 지도</a></div></div>
+        <div class="item"><div class="tline"><span class="tm">17:00</span></div><div class="ic">📜</div><div class="ctext"><div class="t">시인 이생진 시비거리</div><div class="d">성산 바다를 배경으로 시를 읽는 산책길</div><a class="map" href="https://map.naver.com/p/search/%EC%9D%B4%EC%83%9D%EC%A7%84%20%EC%8B%9C%EB%B9%84%EA%B1%B0%EB%A6%AC" target="_blank" rel="noopener"><span class="em">📍</span> 네이버 지도</a></div></div>
+        <div class="item"><div class="tline"><span class="tm">17:30</span></div><div class="ic">🥧</div><div class="ctext"><div class="t">성산해나</div><div class="d">에그타르트 맛집</div><a class="map" href="https://map.naver.com/p/search/%EC%84%B1%EC%82%B0%ED%95%B4%EB%82%98" target="_blank" rel="noopener"><span class="em">📍</span> 네이버 지도</a></div></div>
+        <div class="item"><div class="tline"><span class="tm">18:00</span></div><div class="ic">🍽️</div><div class="ctext"><div class="t">섭지코지로 본점</div><div class="d">섭지코지 근처 저녁 식사</div><a class="map" href="https://map.naver.com/p/search/%EC%84%AD%EC%A7%80%EC%BD%94%EC%A7%80%EB%A1%9C%20%EB%B3%B8%EC%A0%90" target="_blank" rel="noopener"><span class="em">📍</span> 네이버 지도</a></div></div>
         <div class="item"><div class="tline"><span class="tm">19:30</span></div><div class="ic">🏊</div><div class="ctext"><div class="t">호텔 수영장</div><div class="d">저녁 물놀이</div></div></div>
         <div class="item"><div class="tline"><span class="tm">20:30</span></div><div class="ic">🛋️</div><div class="ctext"><div class="t">휴식</div><div class="d">숙소에서 자유롭게</div></div></div>
       </div>
@@ -560,12 +729,12 @@
         <div class="item"><div class="tline"><span class="tm">09:00</span></div><div class="ic">🧳</div><div class="ctext"><div class="t">체크아웃 준비</div></div></div>
         <div class="item"><div class="tline"><span class="tm">10:00</span></div><div class="ic">📸</div><div class="ctext"><div class="t">호텔 주변 포토타임</div><div class="d">에코랜드 호텔 정원 산책</div></div></div>
         <div class="item"><div class="tline"><span class="tm">11:00</span></div><div class="ic">🛎️</div><div class="ctext"><div class="t">호텔 체크아웃</div></div></div>
-        <div class="item"><div class="tline"><span class="tm">12:00</span></div><div class="ic">🍕</div><div class="ctext"><div class="t">이재모피자 제주점</div><div class="d">우동 카덴 웨이팅이 길어 피자로 변경</div><a class="map" href="https://map.naver.com/p/search/%EC%9D%B4%EC%9E%AC%EB%AA%A8%ED%94%BC%EC%9E%90%20%EC%A0%9C%EC%A3%BC%EC%A0%90" target="_blank" rel="noopener">📍 네이버 지도</a></div></div>
-        <div class="item"><div class="tline"><span class="tm">14:00</span></div><div class="ic">🏡</div><div class="ctext"><div class="t">소길별하</div><div class="d">효리네 민박 촬영지</div><a class="map" href="https://map.naver.com/p/search/%EC%86%8C%EA%B8%B8%EB%B3%84%ED%95%98" target="_blank" rel="noopener">📍 네이버 지도</a></div></div>
-        <div class="item"><div class="tline"><span class="tm">16:00</span></div><div class="ic">🏖️</div><div class="ctext"><div class="t">협재해수욕장</div><div class="d">에메랄드빛 바다 마지막 산책</div><a class="map" href="https://map.naver.com/p/search/%ED%98%91%EC%9E%AC%ED%95%B4%EC%88%98%EC%9A%95%EC%9E%A5" target="_blank" rel="noopener">📍 네이버 지도</a></div></div>
-        <div class="item"><div class="tline"><span class="tm">18:00</span></div><div class="ic">🍮</div><div class="ctext"><div class="t">우무</div><div class="d">협재 수제 푸딩 디저트</div><a class="map" href="https://map.naver.com/p/search/%EC%9A%B0%EB%AC%B4%20%EC%A0%9C%EC%A3%BC" target="_blank" rel="noopener">📍 네이버 지도</a></div></div>
+        <div class="item"><div class="tline"><span class="tm">12:00</span></div><div class="ic">🍕</div><div class="ctext"><div class="t">이재모피자 제주점</div><div class="d">우동 카덴 웨이팅이 길어 피자로 변경</div><a class="map" href="https://map.naver.com/p/search/%EC%9D%B4%EC%9E%AC%EB%AA%A8%ED%94%BC%EC%9E%90%20%EC%A0%9C%EC%A3%BC%EC%A0%90" target="_blank" rel="noopener"><span class="em">📍</span> 네이버 지도</a></div></div>
+        <div class="item"><div class="tline"><span class="tm">14:00</span></div><div class="ic">🏡</div><div class="ctext"><div class="t">소길별하</div><div class="d">효리네 민박 촬영지</div><a class="map" href="https://map.naver.com/p/search/%EC%86%8C%EA%B8%B8%EB%B3%84%ED%95%98" target="_blank" rel="noopener"><span class="em">📍</span> 네이버 지도</a></div></div>
+        <div class="item"><div class="tline"><span class="tm">16:00</span></div><div class="ic">🏖️</div><div class="ctext"><div class="t">협재해수욕장</div><div class="d">에메랄드빛 바다 마지막 산책</div><a class="map" href="https://map.naver.com/p/search/%ED%98%91%EC%9E%AC%ED%95%B4%EC%88%98%EC%9A%95%EC%9E%A5" target="_blank" rel="noopener"><span class="em">📍</span> 네이버 지도</a></div></div>
+        <div class="item"><div class="tline"><span class="tm">18:00</span></div><div class="ic">🍮</div><div class="ctext"><div class="t">우무</div><div class="d">협재 수제 푸딩 디저트</div><a class="map" href="https://map.naver.com/p/search/%EC%9A%B0%EB%AC%B4%20%EC%A0%9C%EC%A3%BC" target="_blank" rel="noopener"><span class="em">📍</span> 네이버 지도</a></div></div>
         <div class="item"><div class="tline"><span class="tm">19:00</span></div><div class="ic">🚗</div><div class="ctext"><div class="t">렌트카 반납</div><div class="d">SK렌터카 제주지점</div></div></div>
-        <div class="item"><div class="tline"><span class="tm">20:00</span></div><div class="ic">🍽️</div><div class="ctext"><div class="t">진고복식당 제주공항점</div><div class="d">공항에서 저녁 식사</div><a class="map" href="https://map.naver.com/p/search/%EC%A7%84%EA%B3%A0%EB%B3%B5%EC%8B%9D%EB%8B%B9%20%EC%A0%9C%EC%A3%BC%EA%B3%B5%ED%95%AD%EC%A0%90" target="_blank" rel="noopener">📍 네이버 지도</a></div></div>
+        <div class="item"><div class="tline"><span class="tm">20:00</span></div><div class="ic">🍽️</div><div class="ctext"><div class="t">진고복식당 제주공항점</div><div class="d">공항에서 저녁 식사</div><a class="map" href="https://map.naver.com/p/search/%EC%A7%84%EA%B3%A0%EB%B3%B5%EC%8B%9D%EB%8B%B9%20%EC%A0%9C%EC%A3%BC%EA%B3%B5%ED%95%AD%EC%A0%90" target="_blank" rel="noopener"><span class="em">📍</span> 네이버 지도</a></div></div>
         <div class="item"><div class="tline"><span class="tm">21:15</span></div><div class="ic">🛬</div><div class="ctext"><div class="t">제주공항 출발</div><div class="d">진에어 · 김포 22:30 도착</div></div></div>
         <div class="item"><div class="tline"><span class="tm">23:00</span></div><div class="ic">🏠</div><div class="ctext"><div class="t">집 도착!</div><div class="d">2박 3일 여행 끝 🎉</div></div></div>
       </div>
@@ -577,29 +746,29 @@
 <section class="block tint" id="aipick">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">🤖 AI PICK</span>
+      <span class="eyebrow"><span class="em">🤖</span> AI PICK</span>
       <h2>AI Pick 일정 추천</h2>
       <p>에코랜드 호텔(조천)을 중심으로 차로 1시간 이내, 사진 찍기 좋은 곳 위주로 골랐어요. 맛집·카페·관광지·액티비티를 좌우로 넘겨 골라 보세요.</p>
     </div>
 
     <div class="ai-intro reveal">
       <div class="ai-blurb">
-        <h3>☀️ 6월 초 제주, 이렇게 즐겨요</h3>
+        <h3><span class="em">☀️</span> 6월 초 제주, 이렇게 즐겨요</h3>
         <p>아침 17~19℃, 낮 23~26℃의 포근한 초여름 날씨예요. 자외선·습도가 높으니 선크림과 가벼운 옷, 우산을 챙기세요. 6월 초는 <b style="color:#fff">수국이 막 피기 시작</b>하는 시즌이라 혼인지·보롬왓 꽃밭이 예쁘고, 바다 수온은 아직 20℃ 안팎이라 물놀이엔 슈트를 추천해요.</p>
       </div>
-      <div class="ai-stat"><div class="k">📍 기준 위치</div><div class="v">에코랜드 호텔 · 조천</div></div>
-      <div class="ai-stat"><div class="k">🚗 이동 범위</div><div class="v">차로 1시간 이내</div></div>
-      <div class="ai-stat"><div class="k">✈️ 마지막 날(6/5)</div><div class="v">공항 근처 위주</div></div>
+      <div class="ai-stat"><div class="k"><span class="em">📍</span> 기준 위치</div><div class="v">에코랜드 호텔 · 조천</div></div>
+      <div class="ai-stat"><div class="k"><span class="em">🚗</span> 이동 범위</div><div class="v">차로 1시간 이내</div></div>
+      <div class="ai-stat"><div class="k"><span class="em">✈️</span> 마지막 날(6/5)</div><div class="v">공항 근처 위주</div></div>
     </div>
 
     <div class="legend reveal">
       <span><b>가격</b> ₩ 1만↓ · ₩₩ 1~2만 · ₩₩₩ 2~4만 · ₩₩₩₩ 4만↑ <i>(1인 예시)</i></span>
-      <span>📸 포토 · 🍊 제주only · 🏨 호텔근처 · ✈️ 공항근처 · 🌊 오션뷰 · 🌸 수국시즌</span>
+      <span><span class="em">📸</span> 포토 · <span class="em">🍊</span> 제주only · <span class="em">🏨</span> 호텔근처 · <span class="em">✈️</span> 공항근처 · <span class="em">🌊</span> 오션뷰 · <span class="em">🌸</span> 수국시즌</span>
     </div>
 
     <div class="pick-cat reveal">
       <div class="pick-cat-head">
-        <h3>🍽️ 맛집 <span class="cnt" id="cnt-food"></span></h3>
+        <h3><span class="em">🍽️</span> 맛집 <span class="cnt" id="cnt-food"></span></h3>
         <div class="filters" id="pickSubFilters">
           <button class="subfilter-btn active" data-cu="all">전체 <span class="cnt"></span></button>
           <button class="subfilter-btn" data-cu="한식">한식 <span class="cnt"></span></button>
@@ -612,17 +781,17 @@
     </div>
 
     <div class="pick-cat reveal">
-      <div class="pick-cat-head"><h3>☕ 카페 <span class="cnt" id="cnt-cafe"></span></h3></div>
+      <div class="pick-cat-head"><h3><span class="em">☕</span> 카페 <span class="cnt" id="cnt-cafe"></span></h3></div>
       <div class="pick-rail" id="rail-cafe"></div>
     </div>
 
     <div class="pick-cat reveal">
-      <div class="pick-cat-head"><h3>🏝️ 관광지 <span class="cnt" id="cnt-spot"></span></h3></div>
+      <div class="pick-cat-head"><h3><span class="em">🏝️</span> 관광지 <span class="cnt" id="cnt-spot"></span></h3></div>
       <div class="pick-rail" id="rail-spot"></div>
     </div>
 
     <div class="pick-cat reveal">
-      <div class="pick-cat-head"><h3>🎯 액티비티 <span class="cnt" id="cnt-act"></span></h3></div>
+      <div class="pick-cat-head"><h3><span class="em">🎯</span> 액티비티 <span class="cnt" id="cnt-act"></span></h3></div>
       <div class="pick-rail" id="rail-act"></div>
     </div>
   </div>
@@ -631,7 +800,7 @@
 <!-- FOOTER -->
 <footer>
   <div class="wrap">
-    <div class="ftitle">💍 행복한 결혼 1주년을 축하해요!</div>
+    <div class="ftitle"><span class="em">💍</span> 행복한 결혼 1주년을 축하해요!</div>
     <p>인욱 ♥ 혜림 · 2025년 6월 6일 부부가 되다</p>
     <p>2026년 6월 3일 ~ 6월 5일 · 2박 3일 제주 여행</p>
     <div class="fnote">결혼 1주년 기념 제주 여행 · 푸른 바다와 에메랄드빛 섬 🍊</div>
@@ -682,8 +851,8 @@
 
   // AI Pick 데이터 + 렌더링 + 필터
   const BADGE = {
-    photo: ['pb-photo', '📸 포토'], only: ['pb-only', '🍊 제주only'], near: ['pb-near', '🏨 호텔근처'],
-    air: ['pb-air', '✈️ 공항근처'], ocean: ['pb-ocean', '🌊 오션뷰'], flower: ['pb-flower', '🌸 수국']
+    photo: ['pb-photo', '<span class="em">📸</span> 포토'], only: ['pb-only', '<span class="em">🍊</span> 제주only'], near: ['pb-near', '<span class="em">🏨</span> 호텔근처'],
+    air: ['pb-air', '<span class="em">✈️</span> 공항근처'], ocean: ['pb-ocean', '<span class="em">🌊</span> 오션뷰'], flower: ['pb-flower', '<span class="em">🌸</span> 수국']
   };
   const PICKS = [
     // 🍽️ 맛집 — 한식 10
@@ -777,8 +946,8 @@
       <div class="ptop"><span class="pemoji">${p.e}</span><span class="pname">${p.n}</span><span class="ptype ${p.tc}">${p.t}</span></div>
       ${p.b.length ? `<div class="pbadges">${p.b.map(k => `<span class="pb ${BADGE[k][0]}">${BADGE[k][1]}</span>`).join('')}</div>` : ''}
       <p class="pdesc">${p.d}</p>
-      <div class="pmeta"><span>📍 <b>${p.area}</b></span><span>🚗 ${p.drive}</span><span>💰 ${p.price}</span></div>
-      <a class="pmap" href="https://map.naver.com/p/search/${mq}" target="_blank" rel="noopener">🗺️ 네이버 지도에서 보기</a>
+      <div class="pmeta"><span><span class="em">📍</span> <b>${p.area}</b></span><span><span class="em">🚗</span> ${p.drive}</span><span><span class="em">💰</span> ${p.price}</span></div>
+      <a class="pmap" href="https://map.naver.com/p/search/${mq}" target="_blank" rel="noopener"><span class="em">🗺️</span> 네이버 지도에서 보기</a>
     </article>`;
   };
 
@@ -805,6 +974,99 @@
       foodCntEl.textContent = (cu === 'all' ? cuisineCounts.all : cuisineCounts[cu]) + '곳';
     });
   });
+
+  // 테마 토글 (클래식 ↔ 다크 에디토리얼) — V2에서는 이모지를 라인 아이콘 일러스트로 교체
+  const ICONS = {
+    plane: '<path d="M21.5 2.5 11 13"/><path d="M21.5 2.5 14.8 21l-3.8-8-8-3.8z"/>',
+    car: '<path d="M4 16H2.5v-4.5L5 6h13l2.5 5.5V16H19"/><circle cx="7.5" cy="16" r="1.8"/><circle cx="16.5" cy="16" r="1.8"/><path d="M9.3 16h5.4M2.5 11.5h19"/>',
+    bed: '<path d="M3 18V8"/><path d="M3 13.5h14.5a3.5 3.5 0 0 1 3.5 3.5v1"/><path d="M3 16.2h18"/><circle cx="7.6" cy="10.6" r="1.9"/>',
+    bell: '<path d="M4 17.5h16"/><path d="M5.8 17.5a6.2 6.2 0 0 1 12.4 0"/><path d="M12 8.5V7"/><circle cx="12" cy="5.6" r="1.1"/>',
+    swim: '<circle cx="16.2" cy="7.2" r="1.9"/><path d="M3.5 13.5 9 10l4.2 3"/><path d="M2.5 18.2c1.9-1.3 3.8-1.3 5.7 0s3.8 1.3 5.7 0 3.8-1.3 5.6 0"/>',
+    utensils: '<path d="M7.5 3v7.5"/><path d="M5 3v3.8a2.5 2.5 0 0 0 5 0V3"/><path d="M7.5 12.5V21"/><path d="M17.5 3c-1.7 1.6-2.7 4-2.7 6.3 0 1.6 1.1 2.7 2.7 2.7V21"/>',
+    bowl: '<path d="M4 11.5h16a8 8 0 0 1-16 0z"/><path d="M9 11.5V8.2M12 11.5V7M15 11.5V8.2"/><path d="M8.5 19.5h7"/>',
+    coffee: '<path d="M17 9.5h1.6a2.6 2.6 0 0 1 0 5.2H17"/><path d="M4.5 9.5H17v4.7a4.3 4.3 0 0 1-4.3 4.3H8.8a4.3 4.3 0 0 1-4.3-4.3z"/><path d="M8 4.5v2M11 4v2.5M14 4.5v2"/>',
+    mountain: '<path d="M2.8 19 9.4 7.8l4 6.6 2.4-3.6 5.4 8.2z"/>',
+    camera: '<rect x="3" y="7" width="18" height="13" rx="2.4"/><path d="M8.4 7 10 4.4h4L15.6 7"/><circle cx="12" cy="13.2" r="3.3"/>',
+    image: '<rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="8.8" cy="9.8" r="1.5"/><path d="M4.5 17.5l5.3-5 3.4 3 3-2.6 3.3 3.2"/>',
+    home: '<path d="M3.8 11.3 12 4.3l8.2 7"/><path d="M6 9.8v9.7h12V9.8"/><path d="M10 19.5v-5.2h4v5.2"/>',
+    luggage: '<rect x="6.5" y="7" width="11" height="13" rx="2"/><path d="M9.7 7V5a2 2 0 0 1 2-2h.6a2 2 0 0 1 2 2v2"/><path d="M9.7 10.8v5.4M14.3 10.8v5.4"/>',
+    pan: '<circle cx="10" cy="12" r="6.6"/><circle cx="10" cy="12" r="2.3"/><path d="M16.6 12h4.9"/>',
+    bottle: '<path d="M10 2.8h4"/><path d="M10.8 2.8v3.4L8.6 8.1A2 2 0 0 0 8 9.5V19a2.2 2.2 0 0 0 2.2 2.2h3.6A2.2 2.2 0 0 0 16 19V9.5a2 2 0 0 0-.6-1.4l-2.2-1.9V2.8"/><path d="M8 12.2h8"/>',
+    scroll: '<path d="M7 3.5h10a2 2 0 0 1 2 2V18a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 5 18V5.5a2 2 0 0 1 2-2z"/><path d="M9 8.5h6M9 12h6M9 15.5h3.5"/>',
+    dessert: '<path d="M7.2 13c0-4.2 1.4-7 4.8-7s4.8 2.8 4.8 7"/><path d="M4 13h16"/><path d="M6.2 13l1.5 6.5h8.6l1.5-6.5"/>',
+    pizza: '<path d="M12 21 4.2 6.4a16.5 16.5 0 0 1 15.6 0z"/><circle cx="12" cy="9.3" r="1.05"/><circle cx="9.8" cy="12.8" r="1.05"/><circle cx="13.9" cy="13.6" r="1.05"/>',
+    sofa: '<path d="M5.5 11V8.5a3 3 0 0 1 3-3h7a3 3 0 0 1 3 3V11"/><path d="M3.5 13.2a1.9 1.9 0 0 1 3.8 0v1.3h9.4v-1.3a1.9 1.9 0 0 1 3.8 0v3.3a2.2 2.2 0 0 1-2.2 2.2H5.7a2.2 2.2 0 0 1-2.2-2.2z"/><path d="M5.5 19v1.5M18.5 19v1.5"/>',
+    takeout: '<path d="M5.5 9h13L17 21H7z"/><path d="M5.5 9 9.2 4.5h5.6L18.5 9"/><path d="M7.6 13h8.8"/>',
+    calendar: '<rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
+    fish: '<path d="M4.6 12c2.6-4 6.1-6 9.4-6 2.6 0 4.6 2.8 4.6 6s-2 6-4.6 6c-3.3 0-6.8-2-9.4-6z"/><path d="M4.6 12 2 8.6v6.8z"/><circle cx="15.4" cy="10.4" r=".9"/>',
+    sushi: '<circle cx="12" cy="12" r="8.2"/><circle cx="12" cy="12" r="3.4"/><path d="M12 3.8v4.8M12 15.4v4.8M3.8 12h4.8M15.4 12h4.8"/>',
+    meat: '<path d="M4 12c0-3.6 3.2-6 8-6s8 2.4 8 6-3.2 6-8 6-8-2.4-8-6z"/><path d="M8.8 9.4c2.1 0 3.2 1.1 3.2 2.6s1.1 2.6 3.2 2.6"/>',
+    burger: '<path d="M5 10.5c0-3.6 3-5.7 7-5.7s7 2.1 7 5.7"/><path d="M4 10.5h16M4 14h16"/><path d="M5 14v1.4A3.6 3.6 0 0 0 8.6 19h6.8a3.6 3.6 0 0 0 3.6-3.6V14"/>',
+    beer: '<path d="M6.5 6.5h10v12.5a2 2 0 0 1-2 2h-6a2 2 0 0 1-2-2z"/><path d="M16.5 9.5h2a1.7 1.7 0 0 1 1.7 1.7v2.6a1.7 1.7 0 0 1-1.7 1.7h-2"/><path d="M6.5 6.5c0-2 2.4-3.2 5-3.2s5 1.2 5 3.2"/><path d="M10 10.5V17M13 10.5V17"/>',
+    leaf: '<path d="M5.5 19.5c0-9 4.8-14.6 14-15.5-.9 9.5-5.7 14.5-14 15.5z"/><path d="M5.5 19.5C7.4 13.9 11 9.5 15.8 7.3"/>',
+    tree: '<path d="m12 3 5.3 6.8h-2.9l4 6.4H5.6l4-6.4H6.7z"/><path d="M12 16.2V21"/>',
+    wave: '<path d="M2.5 10c2.4 0 2.4-2.4 4.8-2.4S9.7 10 12 10s2.4-2.4 4.8-2.4S19 10 21.5 10"/><path d="M2.5 16c2.4 0 2.4-2.4 4.8-2.4S9.7 16 12 16s2.4-2.4 4.8-2.4S19 16 21.5 16"/>',
+    umbrella: '<path d="M4 12.5a8 8 0 0 1 16 0z"/><path d="M12 3v1.5"/><path d="M12 12.5v6a2 2 0 0 1-4 0"/>',
+    ship: '<path d="M4 15.5h16l-2.2 4H6.2z"/><path d="M7 15.5V9.5h10v6"/><path d="M10 9.5v-3h4v3"/><path d="M12 9.5v6"/>',
+    flower: '<circle cx="12" cy="12" r="2.1"/><circle cx="12" cy="6.4" r="2.7"/><circle cx="17.3" cy="10.2" r="2.7"/><circle cx="15.3" cy="16.4" r="2.7"/><circle cx="8.7" cy="16.4" r="2.7"/><circle cx="6.7" cy="10.2" r="2.7"/>',
+    droplet: '<path d="M12 3.2c3.6 4.2 6 7.2 6 10.2a6 6 0 0 1-12 0c0-3 2.4-6 6-10.2z"/>',
+    train: '<rect x="5" y="3.5" width="14" height="13.5" rx="3"/><path d="M5 10.5h14"/><circle cx="9" cy="13.8" r="1.1"/><circle cx="15" cy="13.8" r="1.1"/><path d="M8.5 17 6.5 20.5M15.5 17l2 3.5M7 20.5h10"/>',
+    boot: '<path d="M4.5 5h6.5v6h2.2c3.3 0 6 2.3 6.6 5.4l.4 2.1H4.5z"/><path d="M4.5 14.8h7M8 11v2"/>',
+    horseshoe: '<path d="M5.8 20.5v-8.7a6.2 6.2 0 0 1 12.4 0v8.7"/><path d="M3.5 17.3h4.2M16.3 17.3h4.2"/>',
+    scooter: '<circle cx="5.6" cy="17.3" r="2.4"/><circle cx="18.4" cy="17.3" r="2.4"/><path d="M8 17.3h6.2l1.9-9.8h2.7"/><path d="M14.8 10.6H9.8"/>',
+    ring: '<circle cx="12" cy="14.3" r="6.2"/><path d="m9.4 6.6 2.6-3 2.6 3-2.6 2.7z"/>',
+    bread: '<path d="M4 9.8a3.8 3.8 0 0 1 3.8-3.8h8.4A3.8 3.8 0 0 1 20 9.8a2.8 2.8 0 0 1-2 2.7V19a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 19v-6.5a2.8 2.8 0 0 1-2-2.7z"/><path d="m9.3 13.6 1.6-1.7M13 13.6l1.6-1.7"/>',
+    sunset: '<path d="M5.5 15.5a6.5 6.5 0 0 1 13 0"/><path d="M2.5 15.5h19"/><path d="M12 4.2v2.6M5.2 7.4l1.8 1.8M18.8 7.4 17 9.2"/><path d="M6.5 19.5h11"/>',
+    window: '<rect x="4.5" y="4.5" width="15" height="15" rx="1.6"/><path d="M12 4.5v15M4.5 12h15"/>',
+    palm: '<path d="M12.6 21c-.4-5.8 0-9.7 1-12.7"/><path d="M13.6 8.3C11.3 6.1 8 5.9 5.6 7.9c2.6-.3 5 .4 6.6 1.9"/><path d="M13.6 8.3c.4-3 2.8-5 5.9-4.7-1.9 1-3.3 2.6-3.9 4.6"/><path d="M13.6 8.3c3-1 6 .1 7 2.6-2.5-1.1-5-.7-6.6.9"/>',
+    factory: '<path d="M3.5 20V10.2l5.3 3.3v-3.3l5.2 3.3V5h6.5v15z"/><path d="M2.5 20h19"/>',
+    nut: '<path d="M12 3.4c2.4 0 4 1.7 4 3.9 0 1.5-.8 2.3-.8 3.9s.8 2.4.8 3.9c0 2.7-1.6 4.9-4 4.9s-4-2.2-4-4.9c0-1.5.8-2.3.8-3.9S8 8.8 8 7.3c0-2.2 1.6-3.9 4-3.9z"/>',
+    wheat: '<path d="M12 21V7.5"/><path d="M12 11.2c-3 0-4.6-1.5-4.6-4.6 3 0 4.6 1.5 4.6 4.6z"/><path d="M12 11.2c3 0 4.6-1.5 4.6-4.6-3 0-4.6 1.5-4.6 4.6z"/><path d="M12 16.4c-3 0-4.6-1.5-4.6-4.6 3 0 4.6 1.5 4.6 4.6z"/><path d="M12 16.4c3 0 4.6-1.5 4.6-4.6-3 0-4.6 1.5-4.6 4.6z"/>',
+    chili: '<path d="M15.8 7.2c.9-1.8 2.4-2.4 4.2-2"/><path d="M15.8 7.2c0 6.5-4.2 11-11.3 12.4 7.5 1 14.3-3.6 14.3-11a3.3 3.3 0 0 0-3-1.4z"/>',
+    dumpling: '<path d="M4 15.6a8.3 8.3 0 0 1 16 0z"/><path d="M4 15.6h16"/><path d="m8.2 9.7.9-2.1M12 9.2V7m3.8 2.7-.9-2.1"/>',
+    chopsticks: '<path d="M8.2 2.8 11 21.2M13 2.8l2.8 18.4"/>',
+    lantern: '<ellipse cx="12" cy="12.3" rx="5.6" ry="5.4"/><path d="M12 6.9v10.8M9.2 7.5c-.8 1.6-.8 8 0 9.6M14.8 7.5c.8 1.6.8 8 0 9.6"/><path d="M9.6 4.6h4.8M9.6 19.9h4.8"/>',
+    cheese: '<path d="M3.5 17v-6L20.5 6.8V17z"/><circle cx="8" cy="13.6" r="1.1"/><circle cx="13.2" cy="12.1" r="1"/><circle cx="17.2" cy="13.8" r=".9"/>',
+    goggles: '<circle cx="7.4" cy="12" r="3.6"/><circle cx="16.6" cy="12" r="3.6"/><path d="M11 12h2"/><path d="M3.8 12H2.2M20.2 12h1.6"/>',
+    shell: '<path d="M4.2 10.2a7.8 7.8 0 0 1 15.6 0L12 20z"/><path d="M8.3 8.6 12 20M15.7 8.6 12 20M12 6.8V20"/>',
+    sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2.8v2M12 19.2v2M2.8 12h2M19.2 12h2M5.5 5.5l1.4 1.4M17.1 17.1l1.4 1.4M18.5 5.5l-1.4 1.4M6.9 17.1l-1.4 1.4"/>',
+    cave: '<path d="M4 20v-6.8a8 8 0 0 1 16 0V20"/><path d="M2.5 20h19"/><path d="M9 20v-3.6a3 3 0 0 1 6 0V20"/>',
+    orange: '<circle cx="12" cy="13.2" r="7"/><path d="M12 6.2c.4-1.6 1.6-2.6 3.4-2.7-.2 1.7-1.3 2.8-3.4 2.7z"/>'
+  };
+  const EM2I = {
+    '✈️':'plane','🛫':'plane','🛬':'plane','🚗':'car','🏨':'bed','🛎️':'bell','🏊':'swim','🍽️':'utensils',
+    '🍜':'bowl','🍲':'bowl','🥣':'bowl','🍝':'bowl','🍥':'bowl','☕':'coffee','🍵':'coffee',
+    '⛰️':'mountain','🏔️':'mountain','🌋':'mountain','📸':'camera','🖼️':'image','🏠':'home','🏡':'home',
+    '🧳':'luggage','🍳':'pan','🧴':'bottle','📜':'scroll','🥧':'dessert','🍮':'dessert','🍕':'pizza',
+    '🛋️':'sofa','🥡':'takeout','🗓️':'calendar','📅':'calendar','🐟':'fish','🐠':'fish','🍤':'fish','🦐':'fish',
+    '🍣':'sushi','🍱':'sushi','🍖':'meat','🥩':'meat','🐷':'meat','🍔':'burger','🍺':'beer',
+    '🥬':'leaf','🌿':'leaf','🌲':'tree','🌳':'tree','🌊':'wave','🏄':'wave','🛶':'wave','🤿':'goggles',
+    '🏖️':'umbrella','⛴️':'ship','🌸':'flower','💧':'droplet','🚂':'train','🥾':'boot','🐴':'horseshoe',
+    '🛵':'scooter','🏍️':'scooter','💍':'ring','🥯':'bread','🍞':'bread','🥐':'bread','🌅':'sunset',
+    '🪟':'window','🌴':'palm','🏭':'factory','🥜':'nut','🌰':'nut','🌾':'wheat','🌶️':'chili',
+    '🥟':'dumpling','🥢':'chopsticks','🏮':'lantern','🧀':'cheese','🦪':'shell','☀️':'sun','🕳️':'cave','🍊':'orange'
+  };
+  const ICON_SLOT_SEL = '.item .ic, .chip .ico, .ico-wrap, .planepath .ico, .pemoji, .brand .logo';
+  const iconSVG = (key) =>
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[key]}</svg>`;
+  function applyIcons(v2) {
+    document.querySelectorAll(ICON_SLOT_SEL).forEach(el => {
+      if (!el.dataset.e) el.dataset.e = el.textContent.trim();
+      const key = EM2I[el.dataset.e];
+      el.innerHTML = v2 && key ? iconSVG(key) : el.dataset.e;
+    });
+  }
+  const themeBtn = document.getElementById('themeBtn');
+  function setTheme(v2, save) {
+    document.body.classList.toggle('v2', v2);
+    applyIcons(v2);
+    themeBtn.textContent = v2 ? '↺ 클래식' : '✦ 모던';
+    if (save) { try { localStorage.setItem('jeju-theme', v2 ? 'v2' : 'classic'); } catch (e) {} }
+  }
+  themeBtn.addEventListener('click', () => setTheme(!document.body.classList.contains('v2'), true));
+  let savedTheme = 'classic';
+  try { savedTheme = localStorage.getItem('jeju-theme') || 'classic'; } catch (e) {}
+  setTheme(savedTheme === 'v2', false);
 
   // 당겨서 새로고침: 맨 위에서 아래로 끝까지 당기면 reload
   (function () {
