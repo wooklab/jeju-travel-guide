@@ -188,6 +188,7 @@
   }
   .flight.go .fhead { background: linear-gradient(135deg, var(--deep), var(--ocean)); }
   .flight.back .fhead { background: linear-gradient(135deg, var(--ocean), var(--teal)); }
+  .flight .fhead .ftitle { display: inline-flex; align-items: center; gap: 8px; }
   .flight .fhead .airline { font-size: .85rem; font-weight: 700; background: rgba(255,255,255,.2); padding: 4px 12px; border-radius: 999px; }
   .flight .fbody { padding: 26px; display: flex; align-items: center; justify-content: space-between; gap: 14px; }
   .endpoint { text-align: center; flex: 1; }
@@ -478,6 +479,8 @@
   body.v2 .endpoint .time { color: var(--v-text); font-family: var(--v-mono); font-weight: 700; }
   body.v2 .planepath { color: var(--v-mint); }
   body.v2 .planepath .ico svg { width: 20px; height: 20px; }
+  body.v2 .fhead .fico { color: var(--v-mint); display: inline-flex; }
+  body.v2 .fhead .fico svg { width: 18px; height: 18px; }
   body.v2 .planepath .line { background: repeating-linear-gradient(90deg, rgba(45,212,191,.55) 0 6px, transparent 6px 12px); }
 
   /* v2 info (렌트카/숙소) */
@@ -607,7 +610,7 @@
     </div>
     <div class="grid g2">
       <div class="card flight go lift reveal">
-        <div class="fhead"><span>🛫 가는편</span><span class="airline">아시아나항공</span></div>
+        <div class="fhead"><span class="ftitle"><span class="fico">🛫</span>가는편</span><span class="airline">아시아나항공</span></div>
         <div class="fbody">
           <div class="endpoint">
             <div class="time">06:30</div>
@@ -623,7 +626,7 @@
         </div>
       </div>
       <div class="card flight back lift reveal">
-        <div class="fhead"><span>🛬 오는편</span><span class="airline">진에어</span></div>
+        <div class="fhead"><span class="ftitle"><span class="fico">🛬</span>오는편</span><span class="airline">진에어</span></div>
         <div class="fbody">
           <div class="endpoint">
             <div class="time">21:15</div>
@@ -1046,7 +1049,7 @@
     '🪟':'window','🌴':'palm','🏭':'factory','🥜':'nut','🌰':'nut','🌾':'wheat','🌶️':'chili',
     '🥟':'dumpling','🥢':'chopsticks','🏮':'lantern','🧀':'cheese','🦪':'shell','☀️':'sun','🕳️':'cave','🍊':'orange'
   };
-  const ICON_SLOT_SEL = '.item .ic, .chip .ico, .ico-wrap, .planepath .ico, .pemoji, .brand .logo';
+  const ICON_SLOT_SEL = '.item .ic, .chip .ico, .ico-wrap, .planepath .ico, .pemoji, .brand .logo, .fhead .fico';
   const iconSVG = (key) =>
     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[key]}</svg>`;
   function applyIcons(v2) {
